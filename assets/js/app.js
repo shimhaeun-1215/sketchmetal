@@ -21,7 +21,7 @@ const LOGO_CONTOUR = {"w": 563, "h": 754, "pts": [[287.0, 744.2], [276.0, 743.3]
 const TABS = [
   {slug:'all', name:'전체', line:'작업한 현장 사진을 모두 모았습니다.'},
   {slug:'clients', name:'주요 시공처', line:'시공처별로 모아 봤습니다.'},
-  {slug:'structures', name:'금속 구조물·조형물', line:'포토존 조형물, 공원 시설물, 공항 구조틀까지 제작합니다.', home:'c44_1'},
+  {slug:'structures', name:'금속 구조물·조형물', line:'포토존 조형물, 공원 시설물, 공항 구조틀까지 제작합니다.', home:'c44_0'},
   {slug:'stairs', name:'계단·난간·데크', line:'철계단, 스테인리스 난간, 데크를 만들고 설치합니다.', home:'c8_0'},
   {slug:'windows', name:'창호·유리', line:'금속 창호와 방화창, 유리 시공을 합니다.', home:'c36_0'},
   {slug:'canopy', name:'캐노피·파사드', line:'건물 입구 캐노피와 상가 외벽 금속 마감을 합니다.', home:'c22_0'},
@@ -186,7 +186,7 @@ function pageHome(){
   const topHtml = TOP3.map((t,i)=>tile(`#/case/${t.id}?from=clients`,IMG[t.img],t.name,t.name,i)).join('');
   return `
   <section id="hero" class="relative overflow-hidden bg-mist" aria-labelledby="hT">
-    <div class="${WRAP} grid items-center gap-x-10 md:grid-cols-12 md:min-h-[calc(100dvh-4rem)]">
+    <div class="${WRAP} grid items-center gap-x-10 md:grid-cols-12 md:min-h-[calc(100dvh-5.6rem)]">
       <div class="hv -mx-4 px-4 pb-11 pt-8 sm:-mx-6 sm:px-6 md:col-span-5 md:mx-0 md:px-0 md:py-14">
         <span class="hs hs-gold" aria-hidden="true"></span><span class="hs hs-coal" aria-hidden="true"></span><span class="hs hs-navy" aria-hidden="true"></span>
         <div id="logoStage" class="relative z-10 mx-auto aspect-[3/4] w-full max-w-[290px] md:max-w-[420px]">
@@ -401,7 +401,7 @@ function pageWorks(slug){
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
   }
   return banner('시공사례', '', 'c47_51_0') + `
-  <div id="worksTop" class="sticky top-16 z-30 border-b border-rule bg-paper"><nav class="${WRAP} flex overflow-x-auto" aria-label="시공사례 분류">${tabs}</nav></div>
+  <div id="worksTop" class="sticky top-[5.6rem] z-30 border-b border-rule bg-paper"><nav class="${WRAP} flex overflow-x-auto" aria-label="시공사례 분류">${tabs}</nav></div>
   <div class="${WRAP} pb-24 pt-10 md:pb-32">${body}</div>`;
 }
 

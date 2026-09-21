@@ -29,7 +29,7 @@ main:focus,main:focus-visible{outline:none}
 /* (주) 글자 높이를 상호명 이미지에 맞춘 값입니다. 글꼴을 바꾸면 다시 맞춰야 합니다 (눈누 기초고딕 700 기준) */
 .wm-ju{position:relative;top:.045em;font-size:11.0cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
 .wm-sub{grid-column:1 / -1;display:flex;align-items:center;gap:16px;margin-top:14px;font-size:1.3125rem;color:#535B64}
-.grp{scroll-margin-top:9.5rem}
+.grp{scroll-margin-top:11.1rem}
 /* 제목은 명조(세리프), 본문·메뉴·버튼은 고딕 */
 /* 제목도 본문과 같은 고딕으로 통일합니다 (상호명 이미지와 손글씨 슬로건만 예외) */
 h1,h2,h3,.serif{font-family:'SKGothic','SKSans','Noto Sans KR',sans-serif}
