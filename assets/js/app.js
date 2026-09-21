@@ -8,7 +8,8 @@ const SITE = {
   mapAddress:'부산광역시 부산진구 백양대로 312',  // 지도 마커를 찍을 주소 (층·동 제외한 도로명 주소가 잘 찾아집니다)
   kakaoMapKey:'498bf4788049533ad844a7fb3762f95a',     // 카카오 개발자 사이트에서 발급한 JavaScript 키. 넣으면 실제 카카오맵과 마커가 표시됩니다
   lat:null, lng:null, // (선택) 마커 좌표를 직접 지정하려면 위도·경도를 넣으세요. 비워 두면 위 주소로 자동 검색합니다
-  formEndpoint:'',    // 견적 문의를 받을 폼 서비스 주소. 비어 있으면 화면 흐름만 보여 줍니다
+  formEndpoint:'https://api.web3forms.com/submit',    // 견적 문의를 받을 폼 서비스 주소. 비어 있으면 화면 흐름만 보여 줍니다
+  formKey:'77dd38e7-f8d6-4255-9f1b-ce69d2992969',  // Web3Forms 액세스 키. 본문에 access_key 로 함께 보냅니다(주소 뒤에 붙이는 방식은 JSON 요청에서 500이 납니다)
 };
 SITE.kakao = 'https://map.kakao.com/link/search/' + encodeURIComponent(SITE.address);
 SITE.naver = 'https://map.naver.com/p/search/' + encodeURIComponent(SITE.address);
@@ -470,7 +471,7 @@ async function sendQuote(fd){
   if(!SITE.formEndpoint){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; }
   try{
     const area=(AREAS.find(a=>a[0]===fd.area)||[])[1]||'';
-    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg})});
+    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg})});
     return {ok:r.ok};
   }catch(err){ return {ok:false}; }
 }
