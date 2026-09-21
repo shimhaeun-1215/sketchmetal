@@ -259,7 +259,7 @@ function banner(title,sub,img){
   return `<div class="relative overflow-hidden border-b-4 border-gold bg-navy">
     <img src="${IMG[img]}" alt="" aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 h-full w-full object-cover opacity-45 md:w-[62%]" style="-webkit-mask-image:linear-gradient(to left,#000 35%,transparent);mask-image:linear-gradient(to left,#000 35%,transparent)" decoding="async">
     <span class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px" aria-hidden="true"></span>
-    <div class="${WRAP} relative py-12 md:py-16"><div class="flex items-center gap-4">${gbar}<h1 class="text-s6 font-bold tracking-[-0.015em] text-white md:text-s7">${title}</h1></div>${sub?`<p class="mt-4 max-w-[40ch] text-s2 text-white/75">${sub}</p>`:''}</div>
+    <div class="${WRAP} relative py-16 md:py-24"><div class="flex items-center gap-4">${gbar}<h1 class="text-s6 font-bold tracking-[-0.015em] text-white md:text-s7">${title}</h1></div>${sub?`<p class="mt-4 max-w-[40ch] text-s2 text-white/75">${sub}</p>`:''}</div>
   </div>`;
 }
 function aboutTop(cur){ return aboutTabs(cur) + banner('회사소개','','c34_0'); }
@@ -400,7 +400,7 @@ function pageWorks(slug){
   } else {
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
   }
-  return banner('시공사례', '', 'c44_0') + `
+  return banner('시공사례', '', 'c47_51_0') + `
   <div id="worksTop" class="sticky top-16 z-30 border-b border-rule bg-paper"><nav class="${WRAP} flex overflow-x-auto" aria-label="시공사례 분류">${tabs}</nav></div>
   <div class="${WRAP} pb-24 pt-10 md:pb-32">${body}</div>`;
 }

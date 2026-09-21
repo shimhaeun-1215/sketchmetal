@@ -27,7 +27,7 @@ main:focus,main:focus-visible{outline:none}
 .wmw{container-type:inline-size}
 .wm{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4cqw;align-items:end}
 /* (주) 글자 높이를 상호명 이미지에 맞춘 값입니다. 글꼴을 바꾸면 다시 맞춰야 합니다 (눈누 기초고딕 700 기준) */
-.wm-ju{position:relative;top:0;font-size:10.3cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
+.wm-ju{position:relative;top:.045em;font-size:11.0cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
 .wm-sub{grid-column:1 / -1;display:flex;align-items:center;gap:16px;margin-top:14px;font-size:1.3125rem;color:#535B64}
 .grp{scroll-margin-top:9.5rem}
 /* 제목은 명조(세리프), 본문·메뉴·버튼은 고딕 */
