@@ -255,9 +255,9 @@ function aboutTabs(cur){
   return `<div class="border-b border-rule bg-white"><nav class="${WRAP} flex gap-1 overflow-x-auto" aria-label="회사소개 메뉴">${items.map(([k,n,h])=>`<a href="${h}" ${k===cur?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-4 py-3.5 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-navy">${n}</a>`).join('')}</nav></div>`;
 }
 /* 제목 띠: 네이비 바탕에 철골 사진과 도면 격자, 아래는 금색 선 */
-function banner(title,sub,img,fit){
+function banner(title,sub,img){
   return `<div class="relative overflow-hidden border-b-4 border-gold bg-navy">
-    <img src="${IMG[img]}" alt="" aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 h-full w-full ${fit==="contain"?"object-contain object-right":"object-cover"} opacity-45 md:w-[62%]" style="-webkit-mask-image:linear-gradient(to left,#000 35%,transparent);mask-image:linear-gradient(to left,#000 35%,transparent)" decoding="async">
+    <img src="${IMG[img]}" alt="" aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 h-full w-full object-cover opacity-45 md:w-[62%]" style="-webkit-mask-image:linear-gradient(to left,#000 35%,transparent);mask-image:linear-gradient(to left,#000 35%,transparent)" decoding="async">
     <span class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px" aria-hidden="true"></span>
     <div class="${WRAP} relative py-12 md:py-16"><div class="flex items-center gap-4">${gbar}<h1 class="text-s6 font-bold tracking-[-0.015em] text-white md:text-s7">${title}</h1></div>${sub?`<p class="mt-4 max-w-[40ch] text-s2 text-white/75">${sub}</p>`:''}</div>
   </div>`;
@@ -272,7 +272,7 @@ function pageGreeting(){
   <section class="${WRAP} pb-6 pt-10 md:pt-12">
     <div class="grid gap-6 lg:grid-cols-12 lg:items-stretch">
       <div class="${CARD} p-6 md:p-8 lg:col-span-5">
-        <h2 class="text-s4 font-bold tracking-[-0.02em]">Information of Company</h2>
+        <div><h2 class="text-s4 font-bold tracking-[-0.02em]">Information of Company</h2><span class="mt-2 block h-[3px] w-9 bg-gold" aria-hidden="true"></span></div>
         <dl class="mt-6 border-y border-rule">${rows}</dl>
       </div>
       <div class="${CARD} p-6 md:p-8 lg:col-span-7">
@@ -280,11 +280,11 @@ function pageGreeting(){
         <div class="mt-7 grid gap-7 sm:grid-cols-[minmax(0,15rem)_1fr]">
           <div>
             <button class="block w-full text-left" data-zoom="rep" data-title="대표 ${SITE.ceo}" aria-label="대표 사진 크게 보기"><span class="block aspect-[4/5] overflow-hidden rounded-sm bg-plate"><img src="${IMG.rep}" alt="스케치금속건설 대표 ${SITE.ceo}" class="h-full w-full object-cover object-[50%_22%]" decoding="async"></span></button>
-            <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><span class="hand -rotate-6 text-[2.3rem] leading-none text-ink/85" aria-hidden="true">${SITE.ceo}</span></div>
+            <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><span class="sign shrink-0 text-[3.1rem] leading-none text-ink" aria-hidden="true">${SITE.ceo}</span></div>
           </div>
           <div class="space-y-4 text-s1 leading-[1.85] md:text-s2 md:leading-[1.85]">
             <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]"><span class="text-navy">주식회사 스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
-            <p>주식회사 스케치금속건설은 동아대학교 미술대학 조소과 출신의 디자인 감각과 10년 이상의 금속 시공 경험을 바탕으로 설립된 금속 전문건설 기업입니다. 스케치금속건설은 미술을 전공하며 키워 온 디자인 감각과 오랜 현장 경험에서 얻은 시공 노하우를 바탕으로, 기능성과 심미성을 모두 갖춘 차별화된 금속 시공을 추구합니다.</p>
+            <p>주식회사 스케치금속건설은 동아대학교 미술대학 조소과 출신의 디자인 감각과 15년 이상의 금속 시공 경험을 바탕으로 설립된 금속 전문건설 기업입니다. 스케치금속건설은 미술을 전공하며 키워 온 디자인 감각과 오랜 현장 경험에서 얻은 시공 노하우를 바탕으로, 기능성과 심미성을 모두 갖춘 차별화된 금속 시공을 추구합니다.</p>
             <p class="font-bold text-navy">디자인이 다른 금속! 기술로 완성하는 스케치금속건설!</p>
             <p>단순히 금속을 제작·설치하는 데 그치지 않고, 건축물과 공간의 특성을 고려하여 기능성과 디자인을 함께 갖춘 금속 시공을 추구합니다.</p>
             <p>새로운 법인으로 출발하지만, 대표자는 기존 전문건설업체를 운영하며 다양한 현장에서 풍부한 시공 경험과 기술 노하우를 축적해 왔습니다. 작은 공사에도 정성을 다하고, 보이지 않는 부분까지 세심하게 살피며, 고객과의 약속을 끝까지 책임지는 기업이 되겠습니다.</p>
@@ -310,7 +310,7 @@ function pageGreeting(){
 function visionBlock(){
   const items=[
     ['01.','디자인과 시공을 하나로','공간의 특성을 고려한 디자인부터 제작과 설치까지, 모든 과정을 유기적으로 연결하여 완성도 높은 결과물을 만들어갑니다.'],
-    ['02.','경험으로 증명하는 기술력','10년 이상 다양한 금속 시공 현장에서 축적한 경험과 노하우를 바탕으로 정확하고 안전한 시공을 실천합니다.'],
+    ['02.','경험으로 증명하는 기술력','15년 이상 다양한 금속 시공 현장에서 축적한 경험과 노하우를 바탕으로 정확하고 안전한 시공을 실천합니다.'],
     ['03.','작은 공사에도 같은 책임감','공사의 규모와 관계없이 정확한 실측과 철저한 품질관리로 고객과의 약속을 끝까지 책임지겠습니다.'],
   ];
   return `<section class="relative overflow-hidden bg-mist py-20 md:py-28" aria-labelledby="vT">
@@ -318,7 +318,7 @@ function visionBlock(){
       <div class="mx-auto max-w-3xl text-center" data-reveal>
         <p class="hanja select-none text-[7rem] text-ink/[0.06] md:text-[9rem]" aria-hidden="true">築</p>
         <p class="eyebrow -mt-6 justify-center text-gold-deep md:-mt-9">Vision</p>
-        <h2 id="vT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7"><span class="text-gold-deep">10년의 경험</span>을 바탕으로,<br>새로운 가치를 만듭니다.</h2>
+        <h2 id="vT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7"><span class="text-gold-deep">15년 이상의 경험</span>을 바탕으로,<br>새로운 가치를 만듭니다.</h2>
         <p class="mx-auto mt-6 max-w-xl text-s2 text-ink2">법인은 새로 시작했지만 원칙은 그대로입니다. 현장을 먼저 보고, 모양과 쓰임을 같이 정하고, 설치까지 직접 챙깁니다.</p>
       </div>
       <div class="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-10 md:mt-16 md:grid-cols-3">${items.map((r,i)=>`<div data-reveal style="--i:${i}" class="border-t-[3px] border-gold pt-6"><span class="text-s0 font-semibold tracking-[0.2em] text-gold-deep">${r[0]}</span><h3 class="mt-3 text-s4 font-semibold leading-snug tracking-[-0.015em]">${r[1]}</h3><p class="mt-3 text-s2 leading-[1.85] text-ink2">${r[2]}</p></div>`).join('')}</div>
@@ -400,7 +400,7 @@ function pageWorks(slug){
   } else {
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
   }
-  return banner('시공사례', '', 'c39_0', 'contain') + `
+  return banner('시공사례', '', 'c44_0') + `
   <div id="worksTop" class="sticky top-16 z-30 border-b border-rule bg-paper"><nav class="${WRAP} flex overflow-x-auto" aria-label="시공사례 분류">${tabs}</nav></div>
   <div class="${WRAP} pb-24 pt-10 md:pb-32">${body}</div>`;
 }
@@ -458,18 +458,19 @@ function pageContact(area){
   const fld = 'w-full border border-[#C4CAD1] bg-white px-4 py-3 text-s2 leading-normal text-ink placeholder:text-ink2/60 focus:border-navy';
   const lab = 'mb-2 block text-s1 font-semibold text-ink';
   const eyebrow = t => `<p class="eyebrow text-gold-deep">${t}</p>`;
-  const row = (label,val,sub) => `<div class="border-b border-rule py-8 first:pt-0">${eyebrow(label)}<div class="mt-4">${val}</div>${sub?`<p class="mt-2 text-s1 leading-relaxed text-ink2">${sub}</p>`:''}</div>`;
+  /* 라벨은 Tel / E-mail 처럼 쓴 그대로 보여야 해서 대문자 변환을 끕니다 */
+  const row = (label,val,sub) => `<div class="border-b border-rule py-8 first:pt-0"><p class="eyebrow normal-case text-gold-deep">${label}</p><div class="mt-4">${val}</div>${sub?`<p class="mt-2 text-s1 leading-relaxed text-ink2">${sub}</p>`:''}</div>`;
   return `
   <section class="${WRAP} pb-24 pt-14 md:pt-20 lg:pb-32">
     <div class="grid items-start gap-14 lg:grid-cols-12 lg:gap-16">
       <div class="lg:col-span-5">
         ${eyebrow('Direct contact')}
-        <h1 class="mt-5 text-s6 font-bold leading-[1.2] tracking-[-0.02em] md:text-s7">직접 연락하기<span class="text-gold-deep">.</span></h1>
+        <h1 class="mt-5 text-s5 font-bold leading-[1.2] tracking-[-0.02em]">직접 연락하기<span class="text-gold-deep">.</span></h1>
         <div class="mt-12">
-          ${row('전화 / Phone',`<a href="${SITE.telHref}" class="whitespace-nowrap font-display text-s5 font-semibold tracking-[-0.01em] hover:text-navy">${SITE.tel}</a>`,'대표 전화')}
-          ${row('이메일 / Email',`<a href="mailto:${SITE.email}" class="break-all text-s4 font-medium hover:text-navy">${SITE.email}</a>`,'메일로도 문의를 받고 있습니다.')}
-          ${row('본사 / Headquarters',`<p class="text-s3 font-medium leading-[1.5]">${SITE.address}</p>`,`<a href="#/about/location" class="${LINK} text-s1">오시는 길</a>`)}
-          ${row('법인 / Corporation',`<p class="text-s3 font-medium">(주)스케치금속건설</p>`,`사업자등록번호 ${SITE.bizNo}<br>건설업등록번호 ${SITE.conNo}<br>대표 ${SITE.ceo}`)}
+          ${row('Tel',`<a href="${SITE.telHref}" class="whitespace-nowrap font-display text-s5 font-semibold tracking-[-0.01em] hover:text-navy">${SITE.tel}</a>`,'')}
+          ${row('E-mail',`<a href="mailto:${SITE.email}" class="break-all text-s4 font-medium hover:text-navy">${SITE.email}</a>`,'')}
+          ${row('소재지',`<p class="text-s3 font-medium leading-[1.5]">${SITE.address}</p>`,`<a href="#/about/location" class="${LINK} text-s1">오시는 길</a>`)}
+          ${row('법인',`<p class="text-s3 font-medium">(주)스케치금속건설</p>`,`사업자등록번호 ${SITE.bizNo}<br>건설업등록번호 ${SITE.conNo}<br>대표 ${SITE.ceo}`)}
         </div>
       </div>
       <div class="border-l-4 border-gold bg-mist p-7 md:p-10 lg:col-span-7" id="qBox">

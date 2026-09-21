@@ -22,9 +22,12 @@ main:focus,main:focus-visible{outline:none}
   .stroke{animation:none;stroke-dashoffset:0}.tab-fade{animation:none;opacity:1}html{scroll-behavior:auto}
 }
 .hand{font-family:'NanumPenSlogan','Nanum Pen Script','SKGothic','SKSans','Noto Sans KR',cursive;font-weight:400;letter-spacing:0}
+/* 인사말의 대표 서명 장식. 실제 자필 서명이 아니라 붓글씨 글꼴입니다 */
+.sign{font-family:'Nanum Brush Script',cursive;font-weight:400;letter-spacing:.02em;transform:rotate(-7deg);transform-origin:center}
 .wmw{container-type:inline-size}
 .wm{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4cqw;align-items:end}
-.wm-ju{position:relative;top:-.04em;font-size:11.3cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
+/* (주) 글자 높이를 상호명 이미지에 맞춘 값입니다. 글꼴을 바꾸면 다시 맞춰야 합니다 (눈누 기초고딕 700 기준) */
+.wm-ju{position:relative;top:0;font-size:10.3cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
 .wm-sub{grid-column:1 / -1;display:flex;align-items:center;gap:16px;margin-top:14px;font-size:1.3125rem;color:#535B64}
 .grp{scroll-margin-top:9.5rem}
 /* 제목은 명조(세리프), 본문·메뉴·버튼은 고딕 */
