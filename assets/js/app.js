@@ -28,7 +28,46 @@ const TABS = [
   {slug:'custom', name:'맞춤제작·인테리어', line:'의자, 선반, 대문, 매장 인테리어를 주문받아 만듭니다.', home:'c24_0'},
   {slug:'safety', name:'안전시설·보수', line:'안전문, 사다리, 펜스부터 보수공사까지 맡습니다.', home:'c29_0'},
 ];
-const C = (id,tab,title)=>({id,tab,title,imgs:META[id],ar:AR[id]});
+/* 사례별 해시태그 (사진과 사례명에서 뽑은 것입니다. 없는 사실은 넣지 않았습니다) */
+const TAGS = {
+  c44:['금속조형물','포토존','기장죽성성당','야외조형물','원형조형물'],
+  c39:['금속조형물','안데르센공원','공원시설물','안내사인','컬러도장'],
+  c34:['김해공항','금속구조틀','천장구조물','공항시설','안내사인구조물'],
+  c25:['금속구조물','과학관','외부부스','금속외장','공공시설'],
+  c35:['지하철역','금속구조물','실내시설물','매장부스','공공시설'],
+  c32:['금속구조틀','센텀','실내시공','사무공간','골조작업'],
+  c28_38:['단상구조틀','강단','학교시설','각관구조','바닥골조'],
+  c1:['철계단','스테인리스난간','벡스코','실내계단','전시장시설'],
+  c8:['철재계단','카페계단','영도','인테리어계단','사인계단'],
+  c27:['철재계단','양산','실내계단','계단난간','제작설치'],
+  c50:['옥상계단','체커플레이트','벡스코','철재난간','옥외계단'],
+  c26:['옥상계단','철재계단','양산','외부계단','계단난간'],
+  c53:['스텐난간','계단난간','병원시설','엄궁','스테인리스'],
+  c3:['데크','목재데크','광안리','매장외부','데크시공'],
+  c36:['방화창','창호공사','벡스코','실내창호','유리창호'],
+  c7:['하이샤시','창호공사','목마감','농장건물','단열창호'],
+  c20:['썬라이트','채광','공장시설','지붕공사','외부시공'],
+  c22:['캐노피','학교시설','통학로','초등학교','외부구조물'],
+  c40:['금속파사드','외부마감','상가외관','파사드공사','간판구조'],
+  c10_14_30_33:['금속파사드','상가외관','외부마감','파사드공사','상가리모델링'],
+  c24:['디자인가구','금속의자','벤치제작','맞춤제작','목재조합'],
+  c31:['맞춤제작','금속선반','가구제작','수납장','금속프레임'],
+  c9:['금속인테리어','다찌','전포동','라멘집','매장시공'],
+  c6:['발색스텐','디자인구조물','광안리','금속인테리어','출입구'],
+  c5_4:['금속인테리어','난간','식당시공','서울','컬러도장'],
+  c2:['증축','금속인테리어','광안리','캐노피','매장시공'],
+  c12_13:['금속인테리어','천정구조물','남포동','매장시공','카운터제작'],
+  c23:['대문제작','금속대문','목재조합','맞춤제작','외부출입문'],
+  c52:['안전사다리','등받이사다리','옥상시설','벡스코','스테인리스'],
+  c29:['안전사다리','학교시설','사상고등학교','옥상사다리','스테인리스'],
+  c15:['안전펜스','조립형펜스','영화의전당','야외시설','가설펜스'],
+  c46:['유도배수판','빗물처리','벡스코','금속판제작','설비보조'],
+  c45_42:['안전문','접이식','안전덮개','벡스코','계단안전'],
+  c49:['난간보수','누리마루','현장용접','보수공사','야외난간'],
+  c47_51:['코킹','실링','창호유리','벡스코','고소작업'],
+  c17:['안전난간','옥상난간','철재난간','추락방지','옥외시공'],
+};
+const C = (id,tab,title)=>({id,tab,title,imgs:META[id],ar:AR[id],tags:TAGS[id]||[]});
 const CASES = [
   C('c44','structures','기장 죽성성당 포토존 조형물'),
   C('c39','structures','기장 안데르센공원 조형물·금속 구조물'),
@@ -195,9 +234,9 @@ function pageHome(){
     <span class="pointer-events-none absolute left-0 top-0 h-[7vw] w-full bg-navy" style="clip-path:polygon(0 0,100% 0,0 100%)" aria-hidden="true"></span>
     <div class="${WRAP} relative grid items-end gap-12 pt-6 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
-        <h2 id="pT" class="text-s3 font-bold tracking-[0.02em]">스케치금속건설 다짐</h2>
+        <h2 id="pT" class="text-s3 font-bold tracking-[0.02em]">스케치금속건설이 약속합니다</h2>
         <p class="mt-5 font-serif text-s6 font-semibold leading-[1.22] tracking-[-0.015em] md:text-s7 xl:text-s8">작은 공사도<br>소홀히 하지 않겠습니다.</p>
-        <p class="mt-6 text-s3">디자인부터 제작, 시공까지 한 곳에서 맡습니다.</p>
+        <p class="mt-6 max-w-[44ch] text-s2 leading-[1.8]">디자인부터 제작, 시공까지 책임감을 가지고 언제나 정직하게 시공하여 최고의 결과물을 만들어 드리겠습니다.</p>
       </div>
       <div class="lg:col-span-5" data-reveal style="--i:1">
         <p class="text-s3 font-bold leading-[1.75] md:text-s4"><a href="${SITE.telHref}" class="hover:underline">Tel) 051-895-0888</a><br><a href="mailto:${SITE.email}" class="break-all hover:underline">E-mail) ${SITE.email}</a></p>
@@ -216,9 +255,9 @@ function aboutTabs(cur){
   return `<div class="border-b border-rule bg-white"><nav class="${WRAP} flex gap-1 overflow-x-auto" aria-label="회사소개 메뉴">${items.map(([k,n,h])=>`<a href="${h}" ${k===cur?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-4 py-3.5 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-navy">${n}</a>`).join('')}</nav></div>`;
 }
 /* 제목 띠: 네이비 바탕에 철골 사진과 도면 격자, 아래는 금색 선 */
-function banner(title,sub,img){
+function banner(title,sub,img,fit){
   return `<div class="relative overflow-hidden border-b-4 border-gold bg-navy">
-    <img src="${IMG[img]}" alt="" aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 h-full w-full object-cover opacity-45 md:w-[62%]" style="-webkit-mask-image:linear-gradient(to left,#000 35%,transparent);mask-image:linear-gradient(to left,#000 35%,transparent)" decoding="async">
+    <img src="${IMG[img]}" alt="" aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 h-full w-full ${fit==="contain"?"object-contain object-right":"object-cover"} opacity-45 md:w-[62%]" style="-webkit-mask-image:linear-gradient(to left,#000 35%,transparent);mask-image:linear-gradient(to left,#000 35%,transparent)" decoding="async">
     <span class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px" aria-hidden="true"></span>
     <div class="${WRAP} relative py-12 md:py-16"><div class="flex items-center gap-4">${gbar}<h1 class="text-s6 font-bold tracking-[-0.015em] text-white md:text-s7">${title}</h1></div>${sub?`<p class="mt-4 max-w-[40ch] text-s2 text-white/75">${sub}</p>`:''}</div>
   </div>`;
@@ -233,7 +272,7 @@ function pageGreeting(){
   <section class="${WRAP} pb-6 pt-10 md:pt-12">
     <div class="grid gap-6 lg:grid-cols-12 lg:items-stretch">
       <div class="${CARD} p-6 md:p-8 lg:col-span-5">
-        <h2 class="flex items-baseline gap-3 text-s4 font-bold tracking-[-0.02em]">회사 정보<span class="font-sans text-s1 font-medium text-ink2">Information</span></h2>
+        <h2 class="text-s4 font-bold tracking-[-0.02em]">Information of Company</h2>
         <dl class="mt-6 border-y border-rule">${rows}</dl>
       </div>
       <div class="${CARD} p-6 md:p-8 lg:col-span-7">
@@ -250,7 +289,7 @@ function pageGreeting(){
             <p>단순히 금속을 제작·설치하는 데 그치지 않고, 건축물과 공간의 특성을 고려하여 기능성과 디자인을 함께 갖춘 금속 시공을 추구합니다.</p>
             <p>새로운 법인으로 출발하지만, 대표자는 기존 전문건설업체를 운영하며 다양한 현장에서 풍부한 시공 경험과 기술 노하우를 축적해 왔습니다. 작은 공사에도 정성을 다하고, 보이지 않는 부분까지 세심하게 살피며, 고객과의 약속을 끝까지 책임지는 기업이 되겠습니다.</p>
             <p>감사합니다.</p>
-            <p class="pt-1">주식회사 스케치금속건설<br>대표이사 ${SITE.ceo} 올림</p>
+            <p class="pt-1">대표이사 ${SITE.ceo} 올림</p>
           </div>
         </div>
       </div>
@@ -286,11 +325,7 @@ function visionBlock(){
     </div></section>`;
 }
 function pageWhy(){
-  return aboutTop('why') + whyBlock() + visionBlock() + `
-  <section class="bg-steel py-16 text-white md:py-20"><div class="${WRAP} flex flex-wrap items-center justify-between gap-8">
-    <h2 class="max-w-[24ch] text-s5 font-semibold leading-[1.35] md:text-s6">우리 현장도 할 수 있는지 궁금하시면</h2>
-    <a href="#/contact" class="btn-metal light inline-flex items-center justify-center rounded-sm px-7 py-2.5 text-s2 font-bold">견적 문의하기</a>
-  </div></section>`;
+  return aboutTop('why') + whyBlock() + visionBlock();
 }
 
 const SIGN = '<svg class="h-16 w-16 shrink-0" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M30 8h4v48h-4z" fill="#0A2A4A"/><path d="M12 12h30l6 6-6 6H12z" fill="#0A2A4A"/><path d="M52 28H22l-6 6 6 6h30z" fill="#F0B429"/><circle cx="14" cy="52" r="5" fill="#B3261E"/></svg>';
@@ -365,7 +400,7 @@ function pageWorks(slug){
   } else {
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
   }
-  return banner('시공사례', t.line, 'c50_0') + `
+  return banner('시공사례', '', 'c39_0', 'contain') + `
   <div id="worksTop" class="sticky top-16 z-30 border-b border-rule bg-paper"><nav class="${WRAP} flex overflow-x-auto" aria-label="시공사례 분류">${tabs}</nav></div>
   <div class="${WRAP} pb-24 pt-10 md:pb-32">${body}</div>`;
 }
@@ -381,36 +416,39 @@ function pageCase(id,from){
   const grp = groupOf(id);
   const nav = (x,label)=> x?`<a href="#/case/${x.id}?from=${fromSlug}" class="group grid grid-cols-[5.5rem_1fr] items-center gap-4 border border-rule p-3 transition-colors hover:border-ink"><span class="block aspect-[4/3] overflow-hidden bg-plate"><img src="${IMG[x.imgs[0]]}" alt="" class="h-full w-full object-cover" decoding="async"></span><span><span class="block text-s0 text-ink2">${label}</span><b class="block text-s1 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${x.title}</b></span></a>`:'<span></span>';
   const multi = c.imgs.length>1;
+  const chips = (c.tags||[]).map(t=>`<span class="rounded-full bg-plate px-4 py-2 text-s1 text-ink2">#${t}</span>`).join('');
+  const arrowBtn = (dir,label,path)=>`<button data-gstep="${dir}" class="absolute ${dir<0?'left-4':'right-4'} top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-rule bg-paper/90 shadow-sm transition-colors hover:bg-ink hover:text-paper" aria-label="${label}"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></button>`;
+  const PIN = '<svg class="h-7 w-7 shrink-0 text-ink2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>';
+  const LAYERS = '<svg class="h-7 w-7 shrink-0 text-ink2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>';
+  const fact = (icon,label,value)=>`<div class="flex items-center gap-3.5"><span>${icon}</span><span class="min-w-0"><span class="block text-s0 text-ink2">${label}</span><span class="block text-s2 font-bold leading-snug">${value}</span></span></div>`;
   return `
-  <div class="border-b border-rule"><div class="${WRAP} pb-8 pt-10 md:pt-14">
+  <section class="${WRAP} pb-6 pt-10 md:pt-14">
     <nav class="flex flex-wrap items-center gap-2 text-s1 text-ink2" aria-label="현재 위치"><a href="#/works/all" class="hover:text-ink hover:underline">시공사례</a><span aria-hidden="true">/</span><a href="#/works/${fromSlug}" class="hover:text-ink hover:underline">${TABNAME[fromSlug]}</a></nav>
     <h1 class="mt-4 text-s6 font-bold leading-[1.15] tracking-[-0.02em] md:text-s7">${c.title}</h1>
-  </div></div>
-  <section class="${WRAP} grid items-start gap-10 pb-20 pt-10 md:grid-cols-12 md:pb-28">
-    <div class="min-w-0 md:col-span-8">
-      <div class="relative aspect-[4/3] overflow-hidden bg-plate">
-        <img id="galImg" src="${IMG[c.imgs[0]]}" alt="${c.title} 1" class="absolute inset-0 h-full w-full object-contain" decoding="async">
-        ${multi?`<button data-gstep="-1" class="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-ink bg-paper hover:bg-ink hover:text-paper" aria-label="이전 사진"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button data-gstep="1" class="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-ink bg-paper hover:bg-ink hover:text-paper" aria-label="다음 사진"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>`:''}
-        <span id="galCount" class="absolute bottom-3 right-3 bg-paper px-2.5 py-1 text-s0 text-ink2">${multi?`1 / ${c.imgs.length}`:''}</span>
-      </div>
-      ${multi?`<div class="mt-3 flex gap-2 overflow-x-auto pb-1" id="galThumbs">${c.imgs.map((s,i)=>`<button data-gi="${i}" aria-label="사진 ${i+1}" aria-current="${i===0}" class="h-16 w-20 shrink-0 overflow-hidden border-2 border-transparent opacity-60 transition aria-[current=true]:border-ink aria-[current=true]:opacity-100 hover:opacity-100"><img src="${IMG[s]}" alt="" class="h-full w-full object-cover"></button>`).join('')}</div>`:''}
+    ${chips?`<div class="mt-6 flex flex-wrap gap-2.5">${chips}</div>`:''}
+  </section>
+  <section class="${WRAP} pb-16 md:pb-24">
+    <div class="relative aspect-[4/3] overflow-hidden bg-plate md:aspect-[16/10]">
+      <img id="galImg" src="${IMG[c.imgs[0]]}" alt="${c.title} 1" class="absolute inset-0 h-full w-full object-contain" decoding="async">
+      ${multi?arrowBtn(-1,'이전 사진','M15 5l-7 7 7 7')+arrowBtn(1,'다음 사진','M9 5l7 7-7 7'):''}
+      <span id="galCount" class="absolute bottom-4 right-4 rounded-sm bg-paper/90 px-2.5 py-1 text-s0 text-ink2">${multi?`01 / ${String(c.imgs.length).padStart(2,'0')}`:''}</span>
     </div>
-    <aside class="min-w-0 md:sticky md:top-24 md:col-span-4">
-      <dl class="border-t-2 border-ink">
-        <div class="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-rule py-3.5 text-s1"><dt class="text-ink2">분야</dt><dd><a href="#/works/${c.tab}" class="font-bold underline decoration-ink decoration-[1.5px] underline-offset-4 hover:text-navy hover:decoration-gold-deep">${TABNAME[c.tab]}</a></dd></div>
-        ${grp?`<div class="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-rule py-3.5 text-s1"><dt class="text-ink2">시공처</dt><dd><a href="#/works/clients" class="font-bold underline decoration-ink decoration-[1.5px] underline-offset-4 hover:text-navy hover:decoration-gold-deep">${grp}</a></dd></div>`:''}
-        <div class="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-rule py-3.5 text-s1"><dt class="text-ink2">사진</dt><dd>${c.imgs.length}장</dd></div>
-      </dl>
-      <a href="#/contact?area=${c.tab}" class="${BTN} mt-8 w-full">이 공사 문의하기</a>
-      <a href="#/works/${fromSlug}" class="${LINK} mt-5 inline-block text-s1">목록으로 돌아가기</a>
-    </aside>
+    ${multi?`<div class="mt-3 flex gap-3 overflow-x-auto pb-1" id="galThumbs">${c.imgs.map((s,i)=>`<button data-gi="${i}" aria-label="사진 ${i+1}" aria-current="${i===0}" class="aspect-[4/3] w-28 shrink-0 overflow-hidden border-2 border-transparent opacity-70 transition aria-[current=true]:border-gold aria-[current=true]:opacity-100 hover:opacity-100 md:w-32"><img src="${IMG[s]}" alt="" class="h-full w-full object-cover" decoding="async"></button>`).join('')}</div>`:''}
+    <div class="mt-10 grid items-center gap-7 border-t border-rule pt-8 md:grid-cols-[1fr_auto] md:gap-10">
+      <div class="flex flex-wrap items-center gap-x-12 gap-y-6">
+        ${grp?fact(PIN,'시공처',`<a href="#/works/clients" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${grp}</a>`):''}
+        ${fact(LAYERS,'분야',`<a href="#/works/${c.tab}" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${TABNAME[c.tab]}</a>`)}
+      </div>
+      <a href="#/contact?area=${c.tab}" class="${BTN} w-full px-9 py-4 md:w-auto">이 공사 문의하기 <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <a href="#/works/${fromSlug}" class="${LINK} mt-8 inline-block text-s1">목록으로 돌아가기</a>
   </section>
   <section class="${WRAP} border-t border-rule pb-20 pt-10 md:pb-28"><div class="grid gap-4 md:grid-cols-2">${nav(prev,'이전 사례')}${nav(next,'다음 사례')}</div></section>`;
 }
 function galShow(i){
   const c=BY[GAL.id]; if(!c) return; GAL.i=(i+c.imgs.length)%c.imgs.length;
   const im=$('#galImg'); if(!im) return; im.src=IMG[c.imgs[GAL.i]]; im.alt=`${c.title} ${GAL.i+1}`;
-  const cn=$('#galCount'); if(cn) cn.textContent=`${GAL.i+1} / ${c.imgs.length}`;
+  const cn=$('#galCount'); if(cn) cn.textContent=`${String(GAL.i+1).padStart(2,'0')} / ${String(c.imgs.length).padStart(2,'0')}`;
   $$('#galThumbs button').forEach((b,k)=>b.setAttribute('aria-current',String(k===GAL.i)));
 }
 
