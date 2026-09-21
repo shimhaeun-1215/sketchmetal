@@ -15,9 +15,9 @@
 
 ## 디자인 결정 (사용자가 직접 정하거나 반복해서 요구한 것)
 - 색: 네이비 `#0A2A4A`, 차콜 `#22272C`/`#111315`, 골드 `#F0B429`(글자용 짙은 골드 `#8F6210`), 연한 회색 `#F2F5F8`/`#EAEEF2`. 로고의 파랑은 상호명 이미지 안에서만 쓰고 UI 색으로는 쓰지 않음
-- 글꼴: 제목 명조(국민대학교 성곡 세리프, 못 불러오면 Noto Serif KR), 본문·메뉴·버튼 고딕(Noto Sans KR), 슬로건만 나눔손글씨 펜. Tailwind의 `font-bold`는 600으로 재정의되어 있음. 성곡 세리프는 굵기가 400 하나뿐이라 제목에 `font-synthesis:none`(custom.css)을 걸어 가짜 볼드를 막음
+- 글꼴: 제목 명조(국민대학교 성곡 세리프, 못 불러오면 Noto Serif KR), 본문·메뉴·버튼 고딕(눈누 기초고딕, 못 불러오면 Noto Sans KR), 슬로건만 나눔손글씨 펜. Tailwind의 `font-bold`는 600으로 재정의되어 있음. 성곡 세리프는 굵기가 400 하나뿐이라 제목에 `font-synthesis:none`(custom.css)을 걸어 가짜 볼드를 막음
 - 첫 화면: 네이비 격자 면 + 차콜·골드 대각선 위에 3D 로고(three.js r128 CDN, 로고 윤곽을 압출). 상호명은 간판의 3D 금속 글자를 잘라 만든 이미지이고 "(주)"는 글자 높이에 맞춰 텍스트로 얹음(`.wm-ju`의 `cqw` 값은 Noto Sans KR 700 기준으로 맞춘 것)
-- 견적 문의하기 버튼: 기본 검정, 올리면 로고 금색 띠를 옮긴 금속 질감(`.btn-metal`)
+- 견적 문의하기 버튼: 기본 검정, 올리면 단색 금색 `#F7B923`(`.btn-metal`). 금색 면 위에 놓이는 `.on-gold` 변형만 네이비로 반전
 - 홈 주요 시공처(1×3)·시공분야(2×3) 카드: 사진 4:3 통일, 올리면 위로 20px + 금색 선, "자세히 보기" 버튼 없음. 시공사례 목록은 어느 탭이든 한 줄 3개, 사진 4:3 통일
 - 상단 메뉴: 회사소개·시공사례에 올리면 검은 가로 띠로 하위 메뉴가 펼쳐짐
 - 하단 바: 검정, "라벨 | 값" 형식(대표 | 권대욱 ...). 오시는 길: 지도 → 주소·전화 상자 → 네이버지도(파랑)·카카오맵(노랑) 두 버튼
@@ -28,7 +28,7 @@
 - 확인되지 않은 수치·주장을 쓰지 않음. 새 문구를 쓰면 사실 확인이 필요한 부분을 알려 줄 것
 
 ## 아직 끝나지 않은 것
-- 견적 문의 메일: Web3Forms 연결 완료. 지금은 시험용으로 sysoo7214@gmail.com 으로 갑니다. 회사 메일(sysoo222@hanmail.net)로 바꾸려면 Web3Forms 에서 키를 새로 받아 `SITE.formKey` 를 교체하세요
+- 견적 문의 메일: Web3Forms 연결 완료. 회사 메일 sysoo222@hanmail.net 으로 갑니다. 받는 주소를 바꾸려면 Web3Forms 에서 키를 새로 받아 `SITE.formKey` 를 교체하세요
   - 주의: 문서와 달리 주소 뒤에 키를 붙이는 방식(`/submit/<키>`)은 JSON 요청에서 500 이 납니다. `/submit` 으로 보내고 본문에 `access_key` 를 넣어야 합니다(`sendQuote`)
   - 무료 한도 월 250건. 도메인 제한 기능을 찾지 못했으므로 키가 공개된 상태에서 스팸이 오면 hCaptcha 추가를 검토할 것. 허니팟(`f-web`)은 이미 있음
 - 카카오맵: 연결 완료. 실제 카카오 서버로 확인했고 백양대로 312(35.1543/129.0173)에 마커가 찍힘
@@ -42,6 +42,7 @@
 - 새 Tailwind 클래스를 쓰면 `npm install` 후 `npm run css` 로 `assets/css/tailwind.css` 를 다시 만들어야 함
 - `assets/fonts/` 는 사이트에 쓰인 글자만 담은 부분 글꼴. 글자를 새로 추가하면 구글 글꼴이 대신 채우지만(온라인일 때), 정확히 맞추려면 다시 만들 것: Google Fonts 저장소(github.com/google/fonts, ofl/notosanskr, ofl/notoserifkr)의 가변 TTF를 받아 `fonttools varLib.instancer <ttf> wght=300:700`(명조는 400:700)으로 굵기 범위를 줄인 뒤, `index.html`·`app.js`·`images.js`에 쓰인 글자로 `pyftsubset --flavor=woff2` 실행
 - 사진은 webp, 긴 변 1000px 안팎. 사례 추가 절차는 README 참고
+- 본문 글꼴(눈누 기초고딕)도 `fonts.css` 의 jsDelivr 주소로 불러옵니다. 라이선스는 수정·재배포까지 허용(유료 판매만 금지)이라 서브셋을 만들어도 되지만 지금은 원본을 그대로 씁니다. 굵기가 400 하나뿐이라 `font-bold`(600) 자리는 브라우저 합성 볼드입니다. 원본: noonnu.cc/font_page/1496
 - 제목 글꼴(성곡 세리프)에는 위 서브셋 방법을 쓰지 말 것. CC BY-ND 라서 폰트 파일의 수정·복제·배포가 금지됨. 서브셋을 만들거나 `assets/fonts/` 에 파일을 두면 라이선스 위반. `fonts.css` 의 jsDelivr 주소로 원본을 그대로 불러오고 있음(200KB, 굵기 400 하나). 하단 바의 "글꼴 | 국민대학교 성곡 세리프" 표시는 라이선스가 요구하는 저작권 표시라 지우면 안 됨. 원본: noonnu.cc/font_page/1863
 - 파일명에 `con`, `prn`, `aux`, `nul`, `com1`~`com9`, `lpt1`~`lpt9` 를 단독으로 쓰지 말 것. Windows 예약 장치 이름이라 git 이 색인하지 못하고(`unable to index file`) Windows 에서 clone 도 안 됨. 건설업등록증 사진이 원래 `con.webp` 였고 이 때문에 `con-cert.webp` 로 바꿨음(`images.js` 경로만 수정, 키 `IMG.con`·`data-zoom="con"` 은 그대로)
 - 로컬 확인은 `python3 -m http.server 8000` (파일을 더블클릭으로 열면 3D 로고 텍스처가 막힐 수 있음)

@@ -21,7 +21,7 @@ main:focus,main:focus-visible{outline:none}
   [data-reveal]{opacity:1;transform:none;transition:none}
   .stroke{animation:none;stroke-dashoffset:0}.tab-fade{animation:none;opacity:1}html{scroll-behavior:auto}
 }
-.hand{font-family:'NanumPenSlogan','Nanum Pen Script','SKSans','Noto Sans KR',cursive;font-weight:400;letter-spacing:0}
+.hand{font-family:'NanumPenSlogan','Nanum Pen Script','SKGothic','SKSans','Noto Sans KR',cursive;font-weight:400;letter-spacing:0}
 .wmw{container-type:inline-size}
 .wm{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4cqw;align-items:end}
 .wm-ju{position:relative;top:-.04em;font-size:11.3cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
@@ -53,9 +53,9 @@ h1,h2,h3,.serif,.hanja,.font-display,.font-serif{-webkit-font-synthesis:none;fon
   .hs-gold{bottom:-3.2vw;clip-path:polygon(0 0,100% 0,100% calc(100% - 9vw),0 100%)}
 }
 header#hdr::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#F0B429}
+/* 금색 면 위의 버튼은 금색으로 바뀌면 안 보이므로 네이비로 반전 */
 .btn-metal.on-gold::before{background:#0A2A4A}
-.btn-metal.on-gold:hover,.btn-metal.on-gold:focus-visible{color:#fff;text-shadow:none;box-shadow:none}
-.btn-metal.on-gold::after{display:none}
+.btn-metal.on-gold:hover,.btn-metal.on-gold:focus-visible{color:#fff}
 .hanja{font-family:'SKSungkok','SKSerif','Noto Serif KR',serif;line-height:1}
 .map-app{display:flex;align-items:center;justify-content:center;gap:1.25rem;min-height:120px;padding:1.25rem 1.5rem;color:#fff;transition:filter .2s,transform .15s}
 .map-app:hover{filter:brightness(.94)}
@@ -66,16 +66,12 @@ header#hdr::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
 
 #bar{transform:translateY(110%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
 #bar.show{transform:none}
-/* 견적 문의 버튼: 기본은 검정, 올리면 로고 금속 글자 같은 금색 금속 질감 + 빛 스치는 효과 */
-.btn-metal{--mb:#15181B;--mt:#fff;position:relative;isolation:isolate;overflow:hidden;background:var(--mb);color:var(--mt);transition:color .25s ease,box-shadow .3s ease}
+/* 견적 문의 버튼: 기본은 검정, 올리면 단색 금색(#F7B923) */
+.btn-metal{--mb:#15181B;--mt:#fff;position:relative;isolation:isolate;overflow:hidden;background:var(--mb);color:var(--mt);transition:background-color .25s ease,color .25s ease}
 .btn-metal.light{--mb:#fff;--mt:#15181B}
-.btn-metal::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s ease;background:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,rgba(120,80,20,.05) 1px 3px),linear-gradient(180deg,#FFF2C2 0%,#F8D97C 20%,#EFC259 47%,#D6A040 51%,#E9BF5C 64%,#BC8D3A 100%)}
-.btn-metal::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-60%;width:36%;z-index:-1;transform:skewX(-22deg);background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,255,255,0));opacity:0}
-.btn-metal:hover,.btn-metal:focus-visible{color:#2A1D08;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(110,72,18,.6),0 5px 16px rgba(150,105,35,.35)}
+.btn-metal::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .25s ease;background:#F7B923}
+.btn-metal:hover,.btn-metal:focus-visible{color:#15181B}
 .btn-metal:hover::before,.btn-metal:focus-visible::before{opacity:1}
-.btn-metal:hover::after,.btn-metal:focus-visible::after{opacity:1;animation:sheen .85s ease-out}
-@keyframes sheen{from{left:-60%}to{left:135%}}
-@media (prefers-reduced-motion:reduce){.btn-metal::after{animation:none!important;opacity:0!important}}
 /* 홈 카드: 마우스를 올리면 사진이 위로 올라가고 파란 선이 생긴다 (터치 기기에서는 제외) */
 .tile-in{transition:transform .4s ease-out}
 .tile-img{transition:transform .4s ease-out}

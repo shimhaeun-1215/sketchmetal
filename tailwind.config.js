@@ -7,7 +7,7 @@ module.exports = {
         gold:{ DEFAULT:'#F0B429', soft:'#FBCF6A', deep:'#8F6210' }, brand:{ DEFAULT:'#0168B5' }, sun:'#FAD167' },
       fontWeight: { bold:'600' },
       fontFamily: {
-        sans: ['SKSans','"Noto Sans KR"','"Apple SD Gothic Neo"','"Malgun Gothic"','system-ui','sans-serif'],
+        sans: ['SKGothic','SKSans','"Noto Sans KR"','"Apple SD Gothic Neo"','"Malgun Gothic"','system-ui','sans-serif'],
         display: ['SKSungkok','SKSerif','"Noto Serif KR"','serif'],
         serif: ['SKSungkok','SKSerif','"Noto Serif KR"','serif'],
       },

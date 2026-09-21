@@ -9,7 +9,7 @@ const SITE = {
   kakaoMapKey:'498bf4788049533ad844a7fb3762f95a',     // 카카오 개발자 사이트에서 발급한 JavaScript 키. 넣으면 실제 카카오맵과 마커가 표시됩니다
   lat:null, lng:null, // (선택) 마커 좌표를 직접 지정하려면 위도·경도를 넣으세요. 비워 두면 위 주소로 자동 검색합니다
   formEndpoint:'https://api.web3forms.com/submit',    // 견적 문의를 받을 폼 서비스 주소. 비어 있으면 화면 흐름만 보여 줍니다
-  formKey:'77dd38e7-f8d6-4255-9f1b-ce69d2992969',  // Web3Forms 액세스 키. 본문에 access_key 로 함께 보냅니다(주소 뒤에 붙이는 방식은 JSON 요청에서 500이 납니다)
+  formKey:'00e9d506-6811-4b75-8f93-e293630ec3dd',  // Web3Forms 액세스 키. 본문에 access_key 로 함께 보냅니다(주소 뒤에 붙이는 방식은 JSON 요청에서 500이 납니다)
 };
 SITE.kakao = 'https://map.kakao.com/link/search/' + encodeURIComponent(SITE.address);
 SITE.naver = 'https://map.naver.com/p/search/' + encodeURIComponent(SITE.address);
@@ -121,9 +121,9 @@ const gbar = '<span class="h-1.5 w-10 shrink-0 bg-gold" aria-hidden="true"></spa
 const sectionTitle = (id,text,cls='') => `<div class="flex items-center gap-4 ${cls}" data-reveal>${gbar}<h2 id="${id}" class="text-s6 font-bold leading-[1.2] tracking-[-0.015em] md:text-s7">${text}</h2></div>`;
 const RINGS = `<svg class="pointer-events-none absolute -right-52 -top-52 h-[700px] w-[700px] text-white/[0.07]" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.5" aria-hidden="true">${[16,32,48,64,80,96].map(r=>`<circle cx="100" cy="100" r="${r}"/>`).join('')}</svg>`;
 const WHY_ITEMS = [
-  ['美','01.','디자인이 다른 금속','대표가 미술대학에서 공부했습니다. 같은 난간이어도 벽 색깔, 계단 폭, 손이 닿는 높이가 건물마다 다르니 현장에 먼저 가서 봅니다. 모양은 그다음에 정합니다.'],
-  ['精','02.','기술력이 다른 금속','금속 현장에서 10년 넘게 일했습니다. 벡스코 철계단과 안전사다리, 김해공항 구조틀, 영화의전당 안전펜스처럼 크기도 쓰임도 다른 공사를 해 왔습니다. 치수는 현장에서 다시 재고, 설치할 때는 안전부터 확인합니다.'],
-  ['信','03.','등록된 건설업 법인','금속·창호·지붕·건축물조립공사업으로 건설업 등록을 마쳤습니다. 법인은 2026년에 새로 세웠고, 그전에도 전문건설업체를 운영하며 여러 현장을 맡았습니다.'],
+  ['美','01.','디자인이 다른 금속','동아대학교 미술대학 조소과 출신 대표의 디자인 감각을 바탕으로, 건축물의 색상과 구조, 공간의 특성을 세심하게 고려합니다. 기능성과 심미성이 조화를 이루는 차별화된 금속 시공을 추구합니다.'],
+  ['精','02.','기술력이 다른 금속','벡스코 철계단 및 안전사다리, 김해공항 구조틀, 영화의전당 안전펜스 등 다양한 현장에서 시공 경험을 쌓아 왔습니다. 정확한 현장 실측과 숙련된 기술력을 바탕으로 안전하고 완성도 높은 시공을 실천합니다.'],
+  ['信','03.','등록된 전문건설법인','스케치금속건설은 2026년 설립되어 금속·창호·지붕·건축물조립공사업 등록을 마친 전문건설 법인입니다. 대표자의 기존 전문건설업체 운영 경험과 축적된 노하우를 바탕으로, 공사의 규모와 관계없이 품질과 책임을 최우선으로 생각합니다.'],
 ];
 /* WHY SKETCH METAL: 네이비 면 + 금색 한자 (홈과 회사소개 > WHY 탭에서 같이 씁니다) */
 function whyBlock(){
@@ -132,8 +132,8 @@ function whyBlock(){
       <div class="mx-auto max-w-3xl text-center" data-reveal>
         <p class="hanja select-none text-[7rem] text-white/[0.07] md:text-[9rem]" aria-hidden="true">匠</p>
         <p class="eyebrow -mt-6 justify-center text-gold md:-mt-9">Why Sketch Metal</p>
-        <h2 id="wT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7">만들기 전에 <span class="text-gold-soft">현장</span>부터 봅니다.</h2>
-        <p class="mx-auto mt-6 max-w-xl text-s2 text-white/75">도면에 나오지 않는 것, 이를테면 벽 재질이나 사람이 지나다니는 길까지 먼저 확인합니다.</p>
+        <h2 id="wT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7">스케치금속건설의 <span class="text-gold-soft">차별화된 경쟁력</span></h2>
+        <p class="mx-auto mt-6 max-w-xl text-s2 text-white/75">디자인 감각과 숙련된 기술력, 책임 있는 시공으로 금속의 새로운 가치를 만들어갑니다.</p>
       </div>
       <div class="mx-auto mt-14 max-w-5xl md:mt-16">${WHY_ITEMS.map((r,i)=>`<div data-reveal style="--i:${i}" class="grid grid-cols-[4.5rem_1fr] items-start gap-x-6 border-t border-white/15 py-9 last:border-b md:grid-cols-[9.5rem_1fr] md:gap-x-10 md:py-11"><div class="text-center"><span class="hanja block text-[3.4rem] text-gold md:text-[4.6rem]" aria-hidden="true">${r[0]}</span><span class="mt-3 block text-s0 font-medium tracking-[0.2em] text-white/60">${r[1]}</span></div><div><h3 class="text-s4 font-semibold leading-snug tracking-[-0.015em] md:text-s5">${r[2]}</h3><p class="mt-4 max-w-[38em] text-s2 leading-[1.9] text-white/75">${r[3]}</p></div></div>`).join('')}</div>
     </div></section>`;
@@ -156,7 +156,7 @@ function pageHome(){
           <canvas id="logoCanvas" class="absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
         </div>
       </div>
-      <div class="relative z-10 pb-12 pt-10 md:col-span-7 md:py-14 md:pl-8">
+      <div class="relative z-10 pb-12 pt-10 md:col-span-7 md:py-14 md:pl-[max(8.5vw,4.5rem)]">
         <div class="wmw w-full max-w-[680px]">
           <div class="wm">
             <span class="wm-ju" aria-hidden="true">(주)</span>
@@ -165,7 +165,7 @@ function pageHome(){
           </div>
         </div>
         <p class="hand mt-9 [font-size:clamp(2.8rem,6.4vw,4.8rem)] leading-[1.16]">
-          <span class="relative inline-block">미대출신의 감각,<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="stroke s1" style="--len:230" d="M2 8 C40 3 90 9 150 5 S190 6 198 4" fill="none" stroke="#079BDA" stroke-width="3.2" stroke-linecap="round"/></svg></span><br>
+          <span class="relative inline-block">미대출신의 감각<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="stroke s1" style="--len:230" d="M2 8 C40 3 90 9 150 5 S190 6 198 4" fill="none" stroke="#079BDA" stroke-width="3.2" stroke-linecap="round"/></svg></span><br>
           <span class="relative inline-block">금속기술의 완성<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="stroke s2" style="--len:230" d="M2 6 C50 10 100 3 160 7 S190 5 198 7" fill="none" stroke="#EF9A22" stroke-width="3.2" stroke-linecap="round"/></svg></span>
         </p>
         <div class="mt-10"><a href="#/contact" class="${BTN}">견적 문의하기</a></div>
@@ -200,7 +200,7 @@ function pageHome(){
         <p class="mt-6 text-s3">디자인부터 제작, 시공까지 한 곳에서 맡습니다.</p>
       </div>
       <div class="lg:col-span-5" data-reveal style="--i:1">
-        <p class="text-s3 font-bold leading-[1.75] md:text-s4"><a href="${SITE.telHref}" class="hover:underline">Tel)051-895-0888</a><br><a href="mailto:${SITE.email}" class="break-all hover:underline">E-mail)${SITE.email}</a></p>
+        <p class="text-s3 font-bold leading-[1.75] md:text-s4"><a href="${SITE.telHref}" class="hover:underline">Tel) 051-895-0888</a><br><a href="mailto:${SITE.email}" class="break-all hover:underline">E-mail) ${SITE.email}</a></p>
         <a href="#/contact" class="btn-metal on-gold mt-8 inline-flex items-center justify-center rounded-sm px-7 py-2.5 text-s2 font-bold">견적 문의하기</a>
       </div>
     </div>
@@ -244,11 +244,13 @@ function pageGreeting(){
             <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><span class="hand -rotate-6 text-[2.3rem] leading-none text-ink/85" aria-hidden="true">${SITE.ceo}</span></div>
           </div>
           <div class="space-y-4 text-s1 leading-[1.85] md:text-s2 md:leading-[1.85]">
-            <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]">안녕하십니까.<br><span class="text-navy">(주)스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
-            <p>저는 동아대학교 미술대학에서 공부한 뒤 10년 넘게 금속 현장을 다니며 기술을 익혔습니다. 금속 일은 만들어서 붙이면 끝나는 게 아닙니다. 공간에 놓였을 때 모양이 어울리는지, 쓰기 편한지, 튼튼한지까지 봐야 끝난다고 생각합니다.</p>
-            <p>스케치금속건설은 이 생각으로 시작했습니다. 건물과 공간을 먼저 보고 기능과 디자인을 같이 챙기는 '디자인이 다른 금속'을 만들려고 합니다.</p>
-            <p>법인으로는 이제 시작했지만 그전에도 전문건설업체를 운영하며 여러 현장을 맡아 왔습니다. 그때 쌓은 경험이 지금 일의 바탕입니다.</p>
-            <p>맡겨 주시면 결과로 보여드리겠습니다. 감사합니다.</p>
+            <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]"><span class="text-navy">주식회사 스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
+            <p>주식회사 스케치금속건설은 동아대학교 미술대학 조소과 출신의 디자인 감각과 10년 이상의 금속 시공 경험을 바탕으로 설립된 금속 전문건설 기업입니다. 스케치금속건설은 미술을 전공하며 키워 온 디자인 감각과 오랜 현장 경험에서 얻은 시공 노하우를 바탕으로, 기능성과 심미성을 모두 갖춘 차별화된 금속 시공을 추구합니다.</p>
+            <p class="font-bold text-navy">디자인이 다른 금속! 기술로 완성하는 스케치금속건설!</p>
+            <p>단순히 금속을 제작·설치하는 데 그치지 않고, 건축물과 공간의 특성을 고려하여 기능성과 디자인을 함께 갖춘 금속 시공을 추구합니다.</p>
+            <p>새로운 법인으로 출발하지만, 대표자는 기존 전문건설업체를 운영하며 다양한 현장에서 풍부한 시공 경험과 기술 노하우를 축적해 왔습니다. 작은 공사에도 정성을 다하고, 보이지 않는 부분까지 세심하게 살피며, 고객과의 약속을 끝까지 책임지는 기업이 되겠습니다.</p>
+            <p>감사합니다.</p>
+            <p class="pt-1">주식회사 스케치금속건설<br>대표이사 ${SITE.ceo} 올림</p>
           </div>
         </div>
       </div>
@@ -268,17 +270,17 @@ function pageGreeting(){
 /* 비전: 한 문장 머리말 + 세 가지 방향 */
 function visionBlock(){
   const items=[
-    ['01.','디자인부터 시공까지 한 곳에서','스케치와 제작, 설치가 따로 놀지 않도록 처음부터 끝까지 이어서 맡습니다.'],
-    ['02.','사례로 먼저 보여드립니다','맡은 현장은 사진과 함께 계속 올려 두겠습니다. 말보다 결과를 먼저 보고 판단하셨으면 합니다.'],
-    ['03.','작은 공사도 같은 기준으로','난간 하나, 문 하나도 큰 현장과 같은 방식으로 치수를 재고 안전을 확인합니다.'],
+    ['01.','디자인과 시공을 하나로','공간의 특성을 고려한 디자인부터 제작과 설치까지, 모든 과정을 유기적으로 연결하여 완성도 높은 결과물을 만들어갑니다.'],
+    ['02.','경험으로 증명하는 기술력','10년 이상 다양한 금속 시공 현장에서 축적한 경험과 노하우를 바탕으로 정확하고 안전한 시공을 실천합니다.'],
+    ['03.','작은 공사에도 같은 책임감','공사의 규모와 관계없이 정확한 실측과 철저한 품질관리로 고객과의 약속을 끝까지 책임지겠습니다.'],
   ];
   return `<section class="relative overflow-hidden bg-mist py-20 md:py-28" aria-labelledby="vT">
     <div class="${WRAP} relative">
       <div class="mx-auto max-w-3xl text-center" data-reveal>
         <p class="hanja select-none text-[7rem] text-ink/[0.06] md:text-[9rem]" aria-hidden="true">築</p>
         <p class="eyebrow -mt-6 justify-center text-gold-deep md:-mt-9">Vision</p>
-        <h2 id="vT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7">남의 현장에서 배운 10년,<br>이제 <span class="text-gold-deep">우리 이름</span>으로 짓습니다.</h2>
-        <p class="mx-auto mt-6 max-w-xl text-s2 text-ink2">법인은 새로 시작했지만 일하는 방식은 그대로입니다. 현장을 먼저 보고, 모양과 쓰임을 같이 정하고, 설치까지 직접 챙깁니다.</p>
+        <h2 id="vT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7"><span class="text-gold-deep">10년의 경험</span>을 바탕으로,<br>새로운 가치를 만듭니다.</h2>
+        <p class="mx-auto mt-6 max-w-xl text-s2 text-ink2">법인은 새로 시작했지만 원칙은 그대로입니다. 현장을 먼저 보고, 모양과 쓰임을 같이 정하고, 설치까지 직접 챙깁니다.</p>
       </div>
       <div class="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-10 md:mt-16 md:grid-cols-3">${items.map((r,i)=>`<div data-reveal style="--i:${i}" class="border-t-[3px] border-gold pt-6"><span class="text-s0 font-semibold tracking-[0.2em] text-gold-deep">${r[0]}</span><h3 class="mt-3 text-s4 font-semibold leading-snug tracking-[-0.015em]">${r[1]}</h3><p class="mt-3 text-s2 leading-[1.85] text-ink2">${r[2]}</p></div>`).join('')}</div>
     </div></section>`;
@@ -518,7 +520,7 @@ function showQuoteFail(box,retry){
 }
 
 /* ============ 라우터 ============ */
-const TITLES = {home:'스케치금속건설 | 미대출신의 감각, 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의'};
+const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의'};
 let lastKey='', lastHash='';
 const scrollMemo={};
 function parseHash(){

@@ -8,3 +8,10 @@
    제목에 가짜 볼드가 생기지 않도록 custom.css 에서 font-synthesis 를 끕니다.
    불러오지 못하면 아래 SKSerif(Noto Serif KR)로 넘어갑니다. */
 @font-face{font-family:'SKSungkok';font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101542@kmu80sungkokserif/kmu80sungkokserif/KMU80SungkokSerif.woff2) format('woff2')}
+/* 본문·메뉴·버튼 고딕: 눈누 기초고딕 (눈누 X 토끼네활자공장)
+   개인·상업 전면 무료이고 수정·재배포도 허용되지만, 굳이 서브셋을 만들지 않고
+   눈누가 주는 주소에서 원본을 그대로 불러옵니다.
+   굵기는 400 하나뿐입니다. font-bold(600) 자리는 브라우저가 합성 볼드로 그립니다
+   (폴백은 없는 글자에만 일어나고 없는 굵기로는 넘어가지 않습니다).
+   원본: noonnu.cc/font_page/1496 */
+@font-face{font-family:'SKGothic';font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2) format('woff2')}
