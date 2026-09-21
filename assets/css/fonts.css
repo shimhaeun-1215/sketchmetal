@@ -1,0 +1,4 @@
+/* 글꼴: 사이트에 쓰인 글자만 담은 가벼운 파일. 없는 글자는 구글 글꼴(Noto Sans/Serif KR)이 대신 채웁니다 */
+@font-face{font-family:'SKSans';font-style:normal;font-weight:300 700;font-display:swap;src:url(../fonts/NotoSansKR-subset.woff2) format('woff2')}
+@font-face{font-family:'SKSerif';font-style:normal;font-weight:400 700;font-display:swap;src:url(../fonts/NotoSerifKR-subset.woff2) format('woff2')}
+@font-face{font-family:'NanumPenSlogan';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/NanumPenScript-slogan.woff2) format('woff2')}

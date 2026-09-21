@@ -1,0 +1,112 @@
+/* 직접 만든 스타일 (색 면, 3D 로고 자리, 메뉴, 버튼 효과 등) */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid #15181B;outline-offset:3px}
+main:focus,main:focus-visible{outline:none}
+.reg{position:relative}
+
+/* 스크롤 등장: 화면에 처음 들어올 때 한 번만 */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0)*90ms)}
+[data-reveal].in{opacity:1;transform:none}
+/* 첫 화면: 슬로건 밑줄이 그려진다 */
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadeIn{to{opacity:1}}
+.stroke{stroke-dasharray:var(--len,240);stroke-dashoffset:var(--len,240);animation:draw 1.1s cubic-bezier(.16,1,.3,1) forwards}
+.stroke.s1{animation-delay:.9s}.stroke.s2{animation-delay:1.25s}
+.tab-fade{animation:fadeIn .45s ease-out both;opacity:0}
+#logoCanvas{opacity:0;transition:opacity .8s ease-out}
+#logoCanvas.on{opacity:1}
+#logoFallback{transition:opacity .6s ease-out}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+  .stroke{animation:none;stroke-dashoffset:0}.tab-fade{animation:none;opacity:1}html{scroll-behavior:auto}
+}
+.hand{font-family:'NanumPenSlogan','Nanum Pen Script','SKSans','Noto Sans KR',cursive;font-weight:400;letter-spacing:0}
+.wmw{container-type:inline-size}
+.wm{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4cqw;align-items:end}
+.wm-ju{position:relative;top:-.04em;font-size:11.3cqw;line-height:1;font-weight:700;letter-spacing:-.05em;color:#535B64}
+.wm-sub{grid-column:1 / -1;display:flex;align-items:center;gap:16px;margin-top:14px;font-size:1.3125rem;color:#535B64}
+.grp{scroll-margin-top:9.5rem}
+/* 제목은 명조(세리프), 본문·메뉴·버튼은 고딕 */
+h1,h2,h3,.serif{font-family:'SKSerif','Noto Serif KR',serif}
+.eyebrow{display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+.eyebrow::before{content:"";width:1.75rem;height:2px;background:currentColor}
+/* 첫 화면 색 면: 네이비 + 차콜 + 골드 대각선 (건설 브로셔 느낌) */
+.hs{position:absolute;pointer-events:none;z-index:0}
+.hs-navy{background-color:#0A2A4A;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:48px 48px}
+.hs-coal{background:#22272C}
+.hs-gold{background:#F0B429}
+@media (min-width:768px){
+  .hv{position:static}
+  .hs{top:0;bottom:0;left:0}
+  .hs-navy{width:46vw;clip-path:polygon(0 0,100% 0,calc(100% - 9vw) 100%,0 100%)}
+  .hs-coal{width:47.3vw;clip-path:polygon(0 0,100% 0,calc(100% - 9vw) 100%,0 100%)}
+  .hs-gold{width:49.4vw;clip-path:polygon(0 0,100% 0,calc(100% - 9vw) 100%,0 100%)}
+}
+@media (max-width:767px){
+  .hv{position:relative}
+  .hs{left:0;right:0;top:0}
+  .hs-navy{bottom:0;clip-path:polygon(0 0,100% 0,100% calc(100% - 9vw),0 100%)}
+  .hs-coal{bottom:-1.4vw;clip-path:polygon(0 0,100% 0,100% calc(100% - 9vw),0 100%)}
+  .hs-gold{bottom:-3.2vw;clip-path:polygon(0 0,100% 0,100% calc(100% - 9vw),0 100%)}
+}
+header#hdr::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:#F0B429}
+.btn-metal.on-gold::before{background:#0A2A4A}
+.btn-metal.on-gold:hover,.btn-metal.on-gold:focus-visible{color:#fff;text-shadow:none;box-shadow:none}
+.btn-metal.on-gold::after{display:none}
+.hanja{font-family:'SKSerif','Noto Serif KR',serif;line-height:1}
+.map-app{display:flex;align-items:center;justify-content:center;gap:1.25rem;min-height:120px;padding:1.25rem 1.5rem;color:#fff;transition:filter .2s,transform .15s}
+.map-app:hover{filter:brightness(.94)}
+.map-app:active{transform:translateY(1px)}
+.map-app b{display:block;font-size:1.6rem;font-weight:500;line-height:1.3}
+.map-naver{background:#3B7DF3}
+.map-kakao{background:#F6E23E;color:#1F1F1F}
+
+#bar{transform:translateY(110%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+#bar.show{transform:none}
+/* 견적 문의 버튼: 기본은 검정, 올리면 로고 금속 글자 같은 금색 금속 질감 + 빛 스치는 효과 */
+.btn-metal{--mb:#15181B;--mt:#fff;position:relative;isolation:isolate;overflow:hidden;background:var(--mb);color:var(--mt);transition:color .25s ease,box-shadow .3s ease}
+.btn-metal.light{--mb:#fff;--mt:#15181B}
+.btn-metal::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s ease;background:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,rgba(120,80,20,.05) 1px 3px),linear-gradient(180deg,#FFF2C2 0%,#F8D97C 20%,#EFC259 47%,#D6A040 51%,#E9BF5C 64%,#BC8D3A 100%)}
+.btn-metal::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-60%;width:36%;z-index:-1;transform:skewX(-22deg);background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,255,255,0));opacity:0}
+.btn-metal:hover,.btn-metal:focus-visible{color:#2A1D08;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(110,72,18,.6),0 5px 16px rgba(150,105,35,.35)}
+.btn-metal:hover::before,.btn-metal:focus-visible::before{opacity:1}
+.btn-metal:hover::after,.btn-metal:focus-visible::after{opacity:1;animation:sheen .85s ease-out}
+@keyframes sheen{from{left:-60%}to{left:135%}}
+@media (prefers-reduced-motion:reduce){.btn-metal::after{animation:none!important;opacity:0!important}}
+/* 홈 카드: 마우스를 올리면 사진이 위로 올라가고 파란 선이 생긴다 (터치 기기에서는 제외) */
+.tile-in{transition:transform .4s ease-out}
+.tile-img{transition:transform .4s ease-out}
+.tile-media::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#F0B429;opacity:0;transition:opacity .4s ease-out}
+@media (hover:hover) and (pointer:fine){
+  .tile:hover .tile-in{transform:translateY(-20px)}
+  .tile:hover .tile-img{transform:scale(1.05)}
+  .tile:hover .tile-media::after{opacity:1}
+}
+.tile:focus-visible{outline-offset:6px}
+.tile:focus-visible .tile-in{transform:translateY(-20px)}
+.tile:focus-visible .tile-img{transform:scale(1.05)}
+.tile:focus-visible .tile-media::after{opacity:1}
+@media (prefers-reduced-motion:reduce){.tile-in,.tile-img,.tile-media::after{transition:none}}
+/* 지도 버튼: 카카오맵·네이버지도 앱 색을 따라감 */
+.mapbtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 28px;border-radius:10px;font-size:1.0625rem;font-weight:700;transition:filter .2s ease,transform .2s ease}
+.mapbtn:hover{filter:brightness(.94);transform:translateY(-1px)}
+.mapbtn.kk{background:#FEE500;color:#191919}
+.mapbtn.nv{background:#03C75A;color:#fff}
+.kmap-label{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;background:#fff;color:#0A2A4A;font-size:14px;font-weight:700;white-space:nowrap;border:2px solid #0A2A4A;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.kmap-label::before{content:"";width:14px;height:14px;border-radius:50%;background:#F0B429;border:3px solid #0A2A4A}
+
+.err{color:#B3261E}
+.nav-item{display:flex;align-items:stretch}
+.nav-link{position:relative;display:flex;align-items:center;height:100%;padding:0 22px;font-size:.9375rem;font-weight:500}
+.nav-link::after{content:"";position:absolute;left:22px;right:22px;bottom:-1px;height:3px;background:#F0B429;transform:scaleX(0);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.nav-item:hover .nav-link::after,.nav-item:focus-within .nav-link::after,.nav-link[aria-current=page]::after{transform:scaleX(1)}
+.mega{position:absolute;left:0;right:0;top:100%;background:#111315;visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .22s,transform .22s,visibility 0s .22s}
+.nav-item:hover .mega,.nav-item:focus-within .mega{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+.mega-off .mega{visibility:hidden!important;opacity:0!important}
+.mega-in{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 3rem;padding:1.3rem 2rem}
+.mega-in a{position:relative;padding:.35rem 0;color:#fff;font-size:.9375rem;font-weight:500;white-space:nowrap}
+.mega-in a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#FAD167;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.mega-in a:hover,.mega-in a:focus-visible{color:#FAD167}
+.mega-in a:hover::after,.mega-in a:focus-visible::after{transform:scaleX(1)}
+.mega-in a:focus-visible{outline-color:#fff}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0A2A4A;outline-offset:1px}
