@@ -8,8 +8,8 @@ module.exports = {
       fontWeight: { bold:'600' },
       fontFamily: {
         sans: ['SKSans','"Noto Sans KR"','"Apple SD Gothic Neo"','"Malgun Gothic"','system-ui','sans-serif'],
-        display: ['SKSerif','"Noto Serif KR"','serif'],
-        serif: ['SKSerif','"Noto Serif KR"','serif'],
+        display: ['SKSungkok','SKSerif','"Noto Serif KR"','serif'],
+        serif: ['SKSungkok','SKSerif','"Noto Serif KR"','serif'],
       },
       fontSize: {
         s0:['0.8125rem','1.5'], s1:['0.9375rem','1.65'], s2:['1.0625rem','1.8'], s3:['1.25rem','1.6'],

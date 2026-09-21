@@ -2,3 +2,9 @@
 @font-face{font-family:'SKSans';font-style:normal;font-weight:300 700;font-display:swap;src:url(../fonts/NotoSansKR-subset.woff2) format('woff2')}
 @font-face{font-family:'SKSerif';font-style:normal;font-weight:400 700;font-display:swap;src:url(../fonts/NotoSerifKR-subset.woff2) format('woff2')}
 @font-face{font-family:'NanumPenSlogan';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/NanumPenScript-slogan.woff2) format('woff2')}
+/* 제목용 명조: 국민대학교 성곡 세리프 (저작권자 국민대학교, CC BY-ND)
+   수정·복제·배포가 금지된 폰트입니다. 그래서 서브셋을 만들거나 파일을 이 저장소에
+   두지 않고, 눈누가 제공하는 주소에서 원본을 그대로 불러옵니다. 굵기는 400 하나뿐이라
+   제목에 가짜 볼드가 생기지 않도록 custom.css 에서 font-synthesis 를 끕니다.
+   불러오지 못하면 아래 SKSerif(Noto Serif KR)로 넘어갑니다. */
+@font-face{font-family:'SKSungkok';font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101542@kmu80sungkokserif/kmu80sungkokserif/KMU80SungkokSerif.woff2) format('woff2')}

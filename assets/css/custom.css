@@ -28,7 +28,9 @@ main:focus,main:focus-visible{outline:none}
 .wm-sub{grid-column:1 / -1;display:flex;align-items:center;gap:16px;margin-top:14px;font-size:1.3125rem;color:#535B64}
 .grp{scroll-margin-top:9.5rem}
 /* 제목은 명조(세리프), 본문·메뉴·버튼은 고딕 */
-h1,h2,h3,.serif{font-family:'SKSerif','Noto Serif KR',serif}
+h1,h2,h3,.serif{font-family:'SKSungkok','SKSerif','Noto Serif KR',serif}
+/* 성곡 세리프는 굵기가 400 하나뿐이라 브라우저가 가짜 볼드를 만들지 않게 막습니다 */
+h1,h2,h3,.serif,.hanja,.font-display,.font-serif{-webkit-font-synthesis:none;font-synthesis:none}
 .eyebrow{display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
 .eyebrow::before{content:"";width:1.75rem;height:2px;background:currentColor}
 /* 첫 화면 색 면: 네이비 + 차콜 + 골드 대각선 (건설 브로셔 느낌) */
@@ -54,7 +56,7 @@ header#hdr::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
 .btn-metal.on-gold::before{background:#0A2A4A}
 .btn-metal.on-gold:hover,.btn-metal.on-gold:focus-visible{color:#fff;text-shadow:none;box-shadow:none}
 .btn-metal.on-gold::after{display:none}
-.hanja{font-family:'SKSerif','Noto Serif KR',serif;line-height:1}
+.hanja{font-family:'SKSungkok','SKSerif','Noto Serif KR',serif;line-height:1}
 .map-app{display:flex;align-items:center;justify-content:center;gap:1.25rem;min-height:120px;padding:1.25rem 1.5rem;color:#fff;transition:filter .2s,transform .15s}
 .map-app:hover{filter:brightness(.94)}
 .map-app:active{transform:translateY(1px)}
