@@ -39,5 +39,6 @@
 - 새 Tailwind 클래스를 쓰면 `npm install` 후 `npm run css` 로 `assets/css/tailwind.css` 를 다시 만들어야 함
 - `assets/fonts/` 는 사이트에 쓰인 글자만 담은 부분 글꼴. 글자를 새로 추가하면 구글 글꼴이 대신 채우지만(온라인일 때), 정확히 맞추려면 다시 만들 것: Google Fonts 저장소(github.com/google/fonts, ofl/notosanskr, ofl/notoserifkr)의 가변 TTF를 받아 `fonttools varLib.instancer <ttf> wght=300:700`(명조는 400:700)으로 굵기 범위를 줄인 뒤, `index.html`·`app.js`·`images.js`에 쓰인 글자로 `pyftsubset --flavor=woff2` 실행
 - 사진은 webp, 긴 변 1000px 안팎. 사례 추가 절차는 README 참고
+- 파일명에 `con`, `prn`, `aux`, `nul`, `com1`~`com9`, `lpt1`~`lpt9` 를 단독으로 쓰지 말 것. Windows 예약 장치 이름이라 git 이 색인하지 못하고(`unable to index file`) Windows 에서 clone 도 안 됨. 건설업등록증 사진이 원래 `con.webp` 였고 이 때문에 `con-cert.webp` 로 바꿨음(`images.js` 경로만 수정, 키 `IMG.con`·`data-zoom="con"` 은 그대로)
 - 로컬 확인은 `python3 -m http.server 8000` (파일을 더블클릭으로 열면 3D 로고 텍스처가 막힐 수 있음)
 - 이전 대화에서 만든 claude.ai 미리보기 링크는 별개 복사본이라 이 저장소를 고쳐도 자동으로 바뀌지 않음
