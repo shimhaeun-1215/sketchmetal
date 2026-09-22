@@ -463,6 +463,94 @@ function galShow(i){
 }
 
 /* ============ 견적문의 ============ */
+/* 개인정보처리방침 (개인정보 보호법 제30조). 내용은 실제 동작과 맞춰야 하므로
+   폼·수탁사가 바뀌면 여기도 같이 고쳐야 합니다 */
+const PRIVACY_DATE = '2026년 9월 22일';
+function pagePrivacy(){
+  const h = (n,t)=>`<h2 class="mt-12 text-s4 font-bold tracking-[-0.02em] first:mt-0">${n}. ${t}</h2>`;
+  const box = `border border-rule bg-white`;
+  const th = `bg-plate px-4 py-3 text-left text-s1 font-bold`;
+  const td = `border-t border-rule px-4 py-3 align-top text-s1 leading-relaxed`;
+  return banner('개인정보처리방침','','c34_0') + `
+  <section class="${WRAP} pb-24 pt-12 md:pb-32 md:pt-16">
+    <div class="max-w-[62rem] text-s2 leading-[1.85] text-ink">
+      <p>(주)스케치금속건설(이하 "회사")은 개인정보 보호법 제30조에 따라 정보주체의 개인정보를 보호하고 관련 고충을 신속하게 처리할 수 있도록 다음과 같이 개인정보처리방침을 정하여 공개합니다.</p>
+
+      ${h(1,'수집하는 개인정보 항목과 수집 방법')}
+      <p>회사는 홈페이지 견적문의 양식을 통해 아래 항목을 수집합니다.</p>
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
+        <tr><th class="${th}">구분</th><th class="${th}">항목</th></tr>
+        <tr><td class="${td}">필수</td><td class="${td}">성함, 연락처, 문의 내용</td></tr>
+        <tr><td class="${td}">선택</td><td class="${td}">이메일, 회사·소속, 현장 위치</td></tr>
+        <tr><td class="${td}">자동 수집</td><td class="${td}">문의 전송 시 IP 주소 (스팸 차단 목적, 아래 4·5항 참고)</td></tr>
+      </table></div>
+      <p class="mt-4">회사 홈페이지는 쿠키를 비롯한 접속 기록 자동 수집 장치를 사용하지 않으며, 방문자 분석 도구도 두고 있지 않습니다.</p>
+
+      ${h(2,'개인정보의 처리 목적')}
+      <p>수집한 개인정보는 <b>견적 문의 접수와 그에 대한 회신</b> 목적으로만 사용합니다. 광고·홍보 발송에는 사용하지 않습니다.</p>
+
+      ${h(3,'개인정보의 보유 및 이용 기간')}
+      <p>문의 접수일로부터 <b>최대 3년</b> 보관한 뒤 파기합니다. 아래 4·5항의 수탁사 서버에서는 접수일로부터 3년이 지나면 자동으로 삭제되며, 회사는 문의 처리가 끝난 경우 그 전이라도 삭제할 수 있습니다.</p>
+      <p class="mt-3">관계 법령에 따라 보존할 의무가 있는 경우에는 해당 법령이 정한 기간 동안 보관합니다.</p>
+
+      ${h(4,'개인정보 처리의 위탁')}
+      <p>회사는 견적문의 전달을 위해 아래와 같이 업무를 위탁하고 있습니다.</p>
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
+        <tr><th class="${th}">수탁자</th><th class="${th}">위탁 업무</th></tr>
+        <tr><td class="${td}">Web3Forms</td><td class="${td}">견적문의 내용의 전송·보관 및 대표 이메일로의 전달</td></tr>
+        <tr><td class="${td}">Vercel Inc.</td><td class="${td}">홈페이지 호스팅</td></tr>
+      </table></div>
+
+      ${h(5,'개인정보의 국외 이전')}
+      <p>견적문의 양식을 이용하시면 입력하신 정보가 아래와 같이 국외로 이전됩니다. <b>국외 이전을 원하지 않으시면 견적문의 양식 대신 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 문의해 주시기 바랍니다.</b> 이 경우에도 문의 접수와 회신에는 아무런 제한이 없습니다.</p>
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[40rem]">
+        <tr><th class="${th}">구분</th><th class="${th}">내용</th></tr>
+        <tr><td class="${td}">이전받는 자</td><td class="${td}">Web3Forms (연락처 support@web3forms.com)</td></tr>
+        <tr><td class="${td}">이전 국가</td><td class="${td}">인도, 그 밖에 수탁사가 이용하는 Amazon Web Services·Cloudflare·Hetzner 인프라가 위치한 국가</td></tr>
+        <tr><td class="${td}">이전 일시 및 방법</td><td class="${td}">견적문의 전송 시점에 정보통신망을 통해 전송</td></tr>
+        <tr><td class="${td}">이전 항목</td><td class="${td}">1항의 수집 항목 전부 및 IP 주소</td></tr>
+        <tr><td class="${td}">이전받는 자의 이용 목적</td><td class="${td}">문의 내용의 전송·보관, 대표 이메일 전달, 스팸 차단</td></tr>
+        <tr><td class="${td}">보유·이용 기간</td><td class="${td}">전송일로부터 최대 3년 또는 회사의 삭제 시까지</td></tr>
+        <tr><td class="${td}">재위탁</td><td class="${td}">스팸 차단을 위해 CleanTalk에 IP 주소와 이메일이 전달될 수 있습니다</td></tr>
+        <tr><td class="${td}">거부 방법 및 효과</td><td class="${td}">견적문의 양식을 이용하지 않고 전화·이메일로 문의하시면 국외 이전이 발생하지 않습니다. 거부에 따른 불이익은 없습니다</td></tr>
+      </table></div>
+
+      ${h(6,'개인정보의 제3자 제공')}
+      <p>회사는 정보주체의 개인정보를 제3자에게 제공하지 않습니다. 다만 법령에 따라 수사기관 등이 적법한 절차로 요구하는 경우에는 그에 따릅니다.</p>
+
+      ${h(7,'개인정보의 파기')}
+      <p>보유 기간이 지나거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다. 전자적 파일은 복구할 수 없는 방법으로 삭제하고, 출력물이 있는 경우 분쇄하거나 소각합니다.</p>
+
+      ${h(8,'정보주체의 권리와 행사 방법')}
+      <p>정보주체는 언제든지 자신의 개인정보에 대한 <b>열람·정정·삭제·처리정지</b>를 요구할 수 있습니다. 아래 연락처로 요청하시면 지체 없이 처리합니다.</p>
+
+      ${h(9,'개인정보의 안전성 확보 조치')}
+      <p>홈페이지 전 구간을 HTTPS로 암호화해 전송하며, 문의 내용에 접근할 수 있는 사람을 대표 1인으로 제한하고 있습니다. 수탁사는 저장 데이터를 암호화해 보관한다고 밝히고 있습니다.</p>
+
+      ${h(10,'개인정보 보호책임자')}
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[30rem]">
+        <tr><th class="${th}">구분</th><th class="${th}">내용</th></tr>
+        <tr><td class="${td}">보호책임자</td><td class="${td}">대표이사 ${SITE.ceo}</td></tr>
+        <tr><td class="${td}">연락처</td><td class="${td}"><a href="${SITE.telHref}" class="underline underline-offset-4 hover:text-navy">${SITE.tel}</a> / <a href="mailto:${SITE.email}" class="break-all underline underline-offset-4 hover:text-navy">${SITE.email}</a></td></tr>
+      </table></div>
+
+      ${h(11,'권익침해 구제 방법')}
+      <p>개인정보 침해로 상담이나 분쟁조정이 필요하시면 아래 기관에 문의하실 수 있습니다.</p>
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
+        <tr><th class="${th}">기관</th><th class="${th}">전화</th></tr>
+        <tr><td class="${td}">개인정보분쟁조정위원회</td><td class="${td}">1833-6972</td></tr>
+        <tr><td class="${td}">개인정보침해신고센터 (한국인터넷진흥원)</td><td class="${td}">국번 없이 118</td></tr>
+        <tr><td class="${td}">대검찰청 사이버수사과</td><td class="${td}">국번 없이 1301</td></tr>
+        <tr><td class="${td}">경찰청 사이버수사국</td><td class="${td}">국번 없이 182</td></tr>
+      </table></div>
+
+      ${h(12,'개인정보처리방침의 변경')}
+      <p>이 방침의 내용이 바뀌는 경우 변경 사항을 홈페이지에 공개합니다.</p>
+
+      <p class="mt-12 border-t border-rule pt-6 text-s1 text-ink2">시행일: ${PRIVACY_DATE}</p>
+    </div>
+  </section>`;
+}
 function pageContact(area){
   const opts = AREAS.map(([v,n])=>`<option value="${v}" ${v===area?'selected':''}>${n}</option>`).join('');
   const fld = 'w-full border border-[#C4CAD1] bg-white px-4 py-3 text-s2 leading-normal text-ink placeholder:text-ink2/60 focus:border-navy';
@@ -498,7 +586,7 @@ function pageContact(area){
           <div><label for="f-area" class="${lab}">문의 영역 <span class="text-gold-deep" aria-hidden="true">*</span></label><select id="f-area" required class="${fld}" aria-describedby="e-area"><option value="">선택해 주세요</option>${opts}</select><p id="e-area" class="err mt-1 text-s1" role="alert"></p></div>
           <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" class="${fld}" placeholder="예: 부산 해운대구"></div>
           <div><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><textarea id="f-msg" rows="6" required class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
-          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용에 동의합니다. (성함, 연락처, 이메일은 문의 회신 목적으로만 사용됩니다)</span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
+          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="#/privacy" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
           <button id="qSubmit" type="submit" class="${BTN} w-full !py-3.5">견적 문의 보내기<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
           <p id="qNote" class="text-center text-s1 leading-relaxed text-ink2">※ 급한 문의는 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 직접 연락해 주세요.</p>
         </form>
@@ -569,7 +657,7 @@ function showQuoteFail(box,retry){
 }
 
 /* ============ 라우터 ============ */
-const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의'};
+const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침'};
 let lastKey='', lastHash='';
 const scrollMemo={};
 function parseHash(){
@@ -588,6 +676,7 @@ function route(){
   } else if(p0==='works'){ key='works'; html=pageWorks(p1||'all'); }
   else if(p0==='case'){ key='case'; html=pageCase(p1,q.from); }
   else if(p0==='contact'){ key='contact'; html=pageContact(q.area); }
+  else if(p0==='privacy'){ key='privacy'; html=pagePrivacy(); }
   else { html=pageHome(); }
   const prevKey=lastKey, curHash=location.hash;
   app.innerHTML = html;
