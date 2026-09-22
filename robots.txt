@@ -1,0 +1,5 @@
+# 스케치금속건설 홈페이지
+User-agent: *
+Allow: /
+
+Sitemap: https://www.sketchmetal.co.kr/sitemap.xml

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 사이트는 주소 뒤 #/... 로 화면을 바꾸는 구조입니다.
+     검색엔진은 # 뒤를 같은 문서로 보기 때문에 하위 화면을 따로 적지 않았습니다. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.sketchmetal.co.kr/</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
