@@ -147,11 +147,12 @@ function casesOf(slug){
 }
 const WORKS_GRID = 'grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12';
 function caseCard(c,from){
-  const n = c.imgs.length, pos = c.ar<1 ? '50% 32%' : '50% 50%';
+  const nv = c.imgs.filter(isVid).length, n = c.imgs.length - nv, pos = c.ar<1 ? '50% 32%' : '50% 50%';
+  const count = [n>1?`사진 ${n}장`:'', nv?`동영상 ${nv}개`:''].filter(Boolean).join(' · ');
   return `<div class="tab-fade"><a class="case group block w-full text-left" href="#/case/${c.id}?from=${from}" aria-label="${c.title} 자세히 보기">
     <span class="block aspect-[4/3] overflow-hidden rounded-sm bg-plate"><img src="${IMG[c.imgs[0]]}" alt="${c.title}" style="object-position:${pos}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" decoding="async" loading="lazy"></span>
     <span class="mt-3 block text-s2 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${c.title}</span>
-    <span class="mt-1 flex justify-between gap-3 text-s0 text-ink2"><span>${TABNAME[c.tab]}</span>${n>1?`<span class="shrink-0">사진 ${n}장</span>`:''}</span>
+    <span class="mt-1 flex justify-between gap-3 text-s0 text-ink2"><span>${TABNAME[c.tab]}</span>${count?`<span class="shrink-0">${count}</span>`:''}</span>
   </a></div>`;
 }
 
@@ -361,6 +362,13 @@ function loadKakaoSdk(key){
     document.head.appendChild(sc);
   });
 }
+/* 사례 갤러리: 같은 자리에 사진 또는 동영상을 그립니다 */
+const isVid = k => typeof VID!=='undefined' && !!VID[k];
+function galMedia(c,i){
+  const k=c.imgs[i];
+  if(isVid(k)) return `<video src="${VID[k]}" controls preload="metadata" playsinline class="h-full w-full bg-ink object-contain" aria-label="${c.title} 동영상"></video>`;
+  return `<img src="${IMG[k]}" alt="${c.title} ${i+1}" class="h-full w-full object-contain" decoding="async">`;
+}
 let kmapResize=null;
 async function initKakaoMap(){
   const el=$('#kmap'); if(!el) return;
@@ -429,11 +437,11 @@ function pageCase(id,from){
   </section>
   <section class="${WRAP} pb-16 md:pb-24">
     <div class="relative aspect-[4/3] overflow-hidden bg-plate md:aspect-[16/10]">
-      <img id="galImg" src="${IMG[c.imgs[0]]}" alt="${c.title} 1" class="absolute inset-0 h-full w-full object-contain" decoding="async">
+      <div id="galStage" class="absolute inset-0">${galMedia(c,0)}</div>
       ${multi?arrowBtn(-1,'이전 사진','M15 5l-7 7 7 7')+arrowBtn(1,'다음 사진','M9 5l7 7-7 7'):''}
-      <span id="galCount" class="absolute bottom-4 right-4 rounded-sm bg-paper/90 px-2.5 py-1 text-s0 text-ink2">${multi?`01 / ${String(c.imgs.length).padStart(2,'0')}`:''}</span>
+      <span id="galCount" class="absolute right-4 rounded-sm bg-paper/90 px-2.5 py-1 text-s0 text-ink2" style="${isVid(c.imgs[0])?'top:1rem':'bottom:1rem'}">${multi?`01 / ${String(c.imgs.length).padStart(2,'0')}`:''}</span>
     </div>
-    ${multi?`<div class="mt-3 flex gap-3 overflow-x-auto pb-1" id="galThumbs">${c.imgs.map((s,i)=>`<button data-gi="${i}" aria-label="사진 ${i+1}" aria-current="${i===0}" class="aspect-[4/3] w-28 shrink-0 overflow-hidden border-2 border-transparent opacity-70 transition aria-[current=true]:border-gold aria-[current=true]:opacity-100 hover:opacity-100 md:w-32"><img src="${IMG[s]}" alt="" class="h-full w-full object-cover" decoding="async"></button>`).join('')}</div>`:''}
+    ${multi?`<div class="mt-3 flex gap-3 overflow-x-auto pb-1" id="galThumbs">${c.imgs.map((s,i)=>`<button data-gi="${i}" aria-label="${isVid(s)?'동영상':'사진'} ${i+1}" aria-current="${i===0}" class="relative aspect-[4/3] w-28 shrink-0 overflow-hidden border-2 border-transparent opacity-70 transition aria-[current=true]:border-gold aria-[current=true]:opacity-100 hover:opacity-100 md:w-32">${isVid(s)?`<video src="${VID[s]}" preload="metadata" muted playsinline class="pointer-events-none h-full w-full bg-ink object-cover"></video><span class="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink/35"><svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>`:`<img src="${IMG[s]}" alt="" class="h-full w-full object-cover" decoding="async">`}</button>`).join('')}</div>`:''}
     <div class="mt-10 grid items-center gap-7 border-t border-rule pt-8 md:grid-cols-[1fr_auto] md:gap-10">
       <div class="flex flex-wrap items-center gap-x-12 gap-y-6">
         ${grp?fact(PIN,'시공처',`<a href="#/works/clients" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${grp}</a>`):''}
@@ -447,8 +455,15 @@ function pageCase(id,from){
 }
 function galShow(i){
   const c=BY[GAL.id]; if(!c) return; GAL.i=(i+c.imgs.length)%c.imgs.length;
-  const im=$('#galImg'); if(!im) return; im.src=IMG[c.imgs[GAL.i]]; im.alt=`${c.title} ${GAL.i+1}`;
-  const cn=$('#galCount'); if(cn) cn.textContent=`${String(GAL.i+1).padStart(2,'0')} / ${String(c.imgs.length).padStart(2,'0')}`;
+  const st=$('#galStage'); if(!st) return;
+  st.querySelectorAll('video').forEach(v=>v.pause());   /* 넘길 때 재생 중인 동영상을 멈춥니다 */
+  st.innerHTML=galMedia(c,GAL.i);
+  const cn=$('#galCount');
+  if(cn){
+    cn.textContent=`${String(GAL.i+1).padStart(2,'0')} / ${String(c.imgs.length).padStart(2,'0')}`;
+    const v=isVid(c.imgs[GAL.i]);
+    cn.style.top = v?'1rem':''; cn.style.bottom = v?'':'1rem';
+  }
   $$('#galThumbs button').forEach((b,k)=>b.setAttribute('aria-current',String(k===GAL.i)));
 }
 
@@ -718,7 +733,7 @@ document.addEventListener('click',e=>{
   const gs=e.target.closest('[data-gstep]'); if(gs){ galShow(GAL.i+(+gs.dataset.gstep)); }
 });
 let tx=null;
-document.addEventListener('touchstart',e=>{ if(e.target.closest('#galImg')) tx=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchstart',e=>{ if(e.target.closest('#galStage img')) tx=e.touches[0].clientX; },{passive:true});
 document.addEventListener('touchend',e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) galShow(GAL.i+(dx<0?1:-1)); tx=null; });
 $('#skip').addEventListener('click',e=>{ e.preventDefault(); app.focus(); app.scrollIntoView(); });
 
