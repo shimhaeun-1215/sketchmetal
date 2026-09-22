@@ -236,8 +236,9 @@ function pageHome(){
     <div class="${WRAP} relative grid items-end gap-12 pt-6 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
         <h2 id="pT" class="text-s3 font-bold tracking-[0.02em]">스케치금속건설이 약속합니다</h2>
+        <span class="mt-3 block h-[3px] w-20 bg-navy" aria-hidden="true"></span>
         <p class="mt-5 font-serif text-s6 font-semibold leading-[1.22] tracking-[-0.015em] md:text-s7 xl:text-s8">작은 공사도<br>소홀히 하지 않겠습니다.</p>
-        <p class="mt-6 max-w-[44ch] text-s2 leading-[1.8]">디자인부터 제작, 시공까지 책임감을 가지고 언제나 정직하게 시공하여 최고의 결과물을 만들어 드리겠습니다.</p>
+        <p class="mt-6 text-s2 leading-[1.8]">디자인부터 제작, 시공까지 책임감을 가지고<br>언제나 정직하게 시공하여 최고의 결과물을 만들어 드리겠습니다.</p>
       </div>
       <div class="lg:col-span-5" data-reveal style="--i:1">
         <p class="text-s3 font-bold leading-[1.75] md:text-s4"><a href="${SITE.telHref}" class="hover:underline">Tel) 051-895-0888</a><br><a href="mailto:${SITE.email}" class="break-all hover:underline">E-mail) ${SITE.email}</a></p>
@@ -320,7 +321,7 @@ function visionBlock(){
         <p class="hanja select-none text-[7rem] text-ink/[0.06] md:text-[9rem]" aria-hidden="true">築</p>
         <p class="eyebrow -mt-6 justify-center text-gold-deep md:-mt-9">Vision</p>
         <h2 id="vT" class="mt-6 text-s6 font-semibold leading-[1.3] tracking-[-0.015em] md:text-s7"><span class="text-gold-deep">15년 이상의 경험</span>을 바탕으로,<br>새로운 가치를 만듭니다.</h2>
-        <p class="mx-auto mt-6 max-w-xl text-s2 text-ink2">법인은 새로 시작했지만 원칙은 그대로입니다. 현장을 먼저 보고, 모양과 쓰임을 같이 정하고, 설치까지 직접 챙깁니다.</p>
+        <p class="mx-auto mt-6 max-w-2xl text-s2 text-ink2">법인은 새로 시작했지만 원칙은 그대로입니다.<br>현장을 먼저 보고, 모양과 쓰임을 같이 정하고, 설치까지 직접 챙깁니다.</p>
       </div>
       <div class="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-10 md:mt-16 md:grid-cols-3">${items.map((r,i)=>`<div data-reveal style="--i:${i}" class="border-t-[3px] border-gold pt-6"><span class="text-s0 font-semibold tracking-[0.2em] text-gold-deep">${r[0]}</span><h3 class="mt-3 text-s4 font-semibold leading-snug tracking-[-0.015em]">${r[1]}</h3><p class="mt-3 text-s2 leading-[1.85] text-ink2">${r[2]}</p></div>`).join('')}</div>
     </div></section>`;
