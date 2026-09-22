@@ -135,11 +135,6 @@ const esc = s => String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&
 
 const dot = (n,cls='h-9 w-9 text-s2') => `<span class="inline-flex ${cls} shrink-0 items-center justify-center rounded-full border-2 border-gold font-bold leading-none text-navy" aria-hidden="true">${n}</span>`;
 const groupOf = id => (CLIENTS.find(g=>g.ids.includes(id))||{}).name;
-function tabCount(slug){
-  if(slug==='all') return CASES.length;
-  if(slug==='clients') return new Set(CLIENTS.flatMap(g=>g.ids)).size;
-  return CASES.filter(c=>c.tab===slug).length;
-}
 function casesOf(slug){
   if(slug==='all') return [...FEATURED.map(i=>BY[i]), ...CASES.filter(c=>!FEATURED.includes(c.id))];
   if(slug==='clients') return CLIENTS.flatMap(g=>g.ids.map(i=>BY[i]));
@@ -147,12 +142,11 @@ function casesOf(slug){
 }
 const WORKS_GRID = 'grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12';
 function caseCard(c,from){
-  const nv = c.imgs.filter(isVid).length, n = c.imgs.length - nv, pos = c.ar<1 ? '50% 32%' : '50% 50%';
-  const count = [n>1?`사진 ${n}장`:'', nv?`동영상 ${nv}개`:''].filter(Boolean).join(' · ');
+  const pos = c.ar<1 ? '50% 32%' : '50% 50%';
   return `<div class="tab-fade"><a class="case group block w-full text-left" href="#/case/${c.id}?from=${from}" aria-label="${c.title} 자세히 보기">
     <span class="block aspect-[4/3] overflow-hidden rounded-sm bg-plate"><img src="${IMG[c.imgs[0]]}" alt="${c.title}" style="object-position:${pos}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" decoding="async" loading="lazy"></span>
     <span class="mt-3 block text-s2 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${c.title}</span>
-    <span class="mt-1 flex justify-between gap-3 text-s0 text-ink2"><span>${TABNAME[c.tab]}</span>${count?`<span class="shrink-0">${count}</span>`:''}</span>
+    <span class="mt-1 block text-s0 text-ink2">${TABNAME[c.tab]}</span>
   </a></div>`;
 }
 
@@ -401,10 +395,10 @@ async function initKakaoMap(){
 function pageWorks(slug){
   if(!TABNAME[slug]) slug='all';
   const t = TABS.find(t=>t.slug===slug);
-  const tabs = TABS.map(x=>`<a href="#/works/${x.slug}" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}<span class="ml-1.5 text-s0 font-medium">${tabCount(x.slug)}</span></a>`).join('');
+  const tabs = TABS.map(x=>`<a href="#/works/${x.slug}" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}</a>`).join('');
   let body;
   if(slug==='clients'){
-    const chips = CLIENTS.map((g,gi)=>`<a href="#/works/clients" data-jump="grp${gi}" class="border border-ink px-4 py-2 text-s1 font-bold transition-colors hover:bg-ink hover:text-paper">${g.name}<span class="ml-1.5 font-medium text-ink2">${g.ids.length}</span></a>`).join('');
+    const chips = CLIENTS.map((g,gi)=>`<a href="#/works/clients" data-jump="grp${gi}" class="border border-ink px-4 py-2 text-s1 font-bold transition-colors hover:bg-ink hover:text-paper">${g.name}</a>`).join('');
     body = `<div class="mb-10 flex flex-wrap gap-2" aria-label="시공처 바로가기">${chips}</div>` + CLIENTS.map((g,gi)=>`<div id="grp${gi}" class="grp ${gi?'mt-16':''}"><h2 class="mb-6 border-b-2 border-ink pb-3 text-s4 font-bold tracking-[-0.02em]">${g.name}</h2><div class="${WORKS_GRID}">${g.ids.map(id=>caseCard(BY[id],'clients')).join('')}</div></div>`).join('');
   } else {
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
