@@ -225,9 +225,9 @@ function pageHome(){
 
   ${whyBlock()}
 
-  <section class="relative overflow-hidden bg-gold py-20 text-ink md:py-28" aria-labelledby="pT">
+  <section class="relative overflow-hidden bg-gold py-20 text-ink md:pb-24 md:pt-28" aria-labelledby="pT">
     <span class="pointer-events-none absolute left-0 top-0 h-[7vw] w-full bg-navy" style="clip-path:polygon(0 0,100% 0,0 100%)" aria-hidden="true"></span>
-    <div class="${WRAP} relative grid items-end gap-12 pt-6 lg:grid-cols-12">
+    <div class="${WRAP} relative grid items-end gap-12 pt-6 md:pt-12 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
         <h2 id="pT" class="text-s3 font-bold tracking-[0.02em]">스케치금속건설이 약속합니다</h2>
         <span class="mt-3 block h-[3px] w-20 bg-navy" aria-hidden="true"></span>
@@ -276,14 +276,13 @@ function pageGreeting(){
         <div class="mt-7 grid gap-7 sm:grid-cols-[minmax(0,15rem)_1fr]">
           <div>
             <button class="block w-full text-left" data-zoom="rep" data-title="대표 ${SITE.ceo}" aria-label="대표 사진 크게 보기"><span class="block aspect-[4/5] overflow-hidden rounded-sm bg-plate"><img src="${IMG.rep}" alt="스케치금속건설 대표 ${SITE.ceo}" class="h-full w-full object-cover object-[50%_22%]" decoding="async"></span></button>
-            <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><span class="sign shrink-0 text-[3.1rem] leading-none text-ink" aria-hidden="true">${SITE.ceo}</span></div>
+            <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><img src="${IMG.sign}" alt="" class="sign-img shrink-0" width="700" height="334" decoding="async" aria-hidden="true"></div>
           </div>
           <div class="space-y-4 text-s1 leading-[1.85] md:text-s2 md:leading-[1.85]">
-            <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]"><span class="text-navy">주식회사 스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
-            <p>주식회사 스케치금속건설은 동아대학교 미술대학 조소과 출신의 디자인 감각과 15년 이상의 금속 시공 경험을 바탕으로 설립된 금속 전문건설 기업입니다. 스케치금속건설은 미술을 전공하며 키워 온 디자인 감각과 오랜 현장 경험에서 얻은 시공 노하우를 바탕으로, 기능성과 심미성을 모두 갖춘 차별화된 금속 시공을 추구합니다.</p>
+            <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]"><span class="text-navy">(주)스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
+            <p>(주)스케치금속건설은 동아대학교 미술대학 조소과 출신의 디자인 감각과 15년 이상의 금속 시공 경험을 바탕으로 설립된 금속 전문건설 기업입니다. 미술을 전공하며 키워 온 디자인 감각과 오랜 현장에서 축적한 기술력을 접목하여, 건축물과 공간의 특성을 고려한 기능적이고 아름다운 금속 구조물을 만들어 갑니다.</p>
             <p class="font-bold text-navy">디자인이 다른 금속! 기술로 완성하는 스케치금속건설!</p>
-            <p>단순히 금속을 제작·설치하는 데 그치지 않고, 건축물과 공간의 특성을 고려하여 기능성과 디자인을 함께 갖춘 금속 시공을 추구합니다.</p>
-            <p>새로운 법인으로 출발하지만, 대표자는 기존 전문건설업체를 운영하며 다양한 현장에서 풍부한 시공 경험과 기술 노하우를 축적해 왔습니다. 작은 공사에도 정성을 다하고, 보이지 않는 부분까지 세심하게 살피며, 고객과의 약속을 끝까지 책임지는 기업이 되겠습니다.</p>
+            <p>단순한 제작과 설치를 넘어, 정확한 현장 실측부터 세심한 시공과 마무리까지 모든 과정에서 완성도 높은 결과물을 제공하겠습니다. 새로운 법인으로 출발하지만, 대표자는 기존 전문건설업체를 운영하며 다양한 현장에서 풍부한 시공 경험과 기술 노하우를 축적해 왔습니다. 작은 공사에도 정성을 다하고, 보이지 않는 부분까지 세심하게 살피며, 고객과의 약속을 끝까지 책임지는 기업이 되겠습니다.</p>
             <p>감사합니다.</p>
             <p class="pt-1">대표이사 ${SITE.ceo} 올림</p>
           </div>
@@ -576,16 +575,16 @@ function pageContact(area){
         <form id="qForm" novalidate class="mt-8 grid gap-6" aria-describedby="qNote">
           <div class="absolute -left-[9999px]" aria-hidden="true"><label>웹사이트<input id="f-web" type="text" tabindex="-1" autocomplete="off"></label></div>
           <div class="grid gap-6 sm:grid-cols-2">
-            <div><label for="f-name" class="${lab}">성함 <span class="text-gold-deep" aria-hidden="true">*</span></label><input id="f-name" type="text" autocomplete="name" required class="${fld}" placeholder="홍길동" aria-describedby="e-name"><p id="e-name" class="err mt-1 text-s1" role="alert"></p></div>
-            <div><label for="f-org" class="${lab}">회사 / 소속</label><input id="f-org" type="text" autocomplete="organization" class="${fld}" placeholder="(주)회사명"></div>
+            <div><label for="f-name" class="${lab}">성함 <span class="text-gold-deep" aria-hidden="true">*</span></label><input id="f-name" type="text" autocomplete="name" required maxlength="20" class="${fld}" placeholder="홍길동" aria-describedby="e-name"><p id="e-name" class="err mt-1 text-s1" role="alert"></p></div>
+            <div><label for="f-org" class="${lab}">회사 / 소속</label><input id="f-org" type="text" autocomplete="organization" maxlength="40" class="${fld}" placeholder="(주)회사명"></div>
           </div>
           <div class="grid gap-6 sm:grid-cols-2">
-            <div><label for="f-tel" class="${lab}">연락처 <span class="text-gold-deep" aria-hidden="true">*</span></label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" required class="${fld}" placeholder="010-0000-0000" aria-describedby="e-tel"><p id="e-tel" class="err mt-1 text-s1" role="alert"></p></div>
-            <div><label for="f-mail" class="${lab}">이메일</label><input id="f-mail" type="email" autocomplete="email" class="${fld}" placeholder="example@email.com" aria-describedby="e-mail"><p id="e-mail" class="err mt-1 text-s1" role="alert"></p></div>
+            <div><label for="f-tel" class="${lab}">연락처 <span class="text-gold-deep" aria-hidden="true">*</span></label><input id="f-tel" type="tel" inputmode="numeric" autocomplete="tel" required maxlength="13" class="${fld}" placeholder="010-0000-0000" aria-describedby="e-tel"><p id="e-tel" class="err mt-1 text-s1" role="alert"></p></div>
+            <div><label for="f-mail" class="${lab}">이메일</label><input id="f-mail" type="email" autocomplete="email" maxlength="60" class="${fld}" placeholder="example@email.com" aria-describedby="e-mail"><p id="e-mail" class="err mt-1 text-s1" role="alert"></p></div>
           </div>
           <div><label for="f-area" class="${lab}">문의 영역 <span class="text-gold-deep" aria-hidden="true">*</span></label><select id="f-area" required class="${fld}" aria-describedby="e-area"><option value="">선택해 주세요</option>${opts}</select><p id="e-area" class="err mt-1 text-s1" role="alert"></p></div>
-          <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" class="${fld}" placeholder="예: 부산 해운대구"></div>
-          <div><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><textarea id="f-msg" rows="6" required class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
+          <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" maxlength="50" class="${fld}" placeholder="예: 부산 해운대구"></div>
+          <div><div class="flex items-baseline justify-between gap-3"><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><span id="msgCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${MSG_MAX}</span></div><textarea id="f-msg" rows="6" required maxlength="${MSG_MAX}" class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
           <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="#/privacy" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
           <button id="qSubmit" type="submit" class="${BTN} w-full !py-3.5">견적 문의 보내기<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
           <p id="qNote" class="text-center text-s1 leading-relaxed text-ink2">※ 급한 문의는 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 직접 연락해 주세요.</p>
@@ -594,15 +593,30 @@ function pageContact(area){
     </div>
   </section>`;
 }
+const MSG_MAX = 1000;   /* 문의 내용 최대 글자 수 */
 const FIELD = {name:'f-name',org:'f-org',tel:'f-tel',mail:'f-mail',area:'f-area',place:'f-place',msg:'f-msg'};
+/* 연락처는 숫자만 받아 국내 번호 형식(02 10자리, 그 밖 10~11자리)으로 다시 씁니다 */
+function fmtTel(v){
+  let d=(v||'').replace(/\D/g,'');
+  if(d.startsWith('02')){
+    d=d.slice(0,10);
+    if(d.length<3) return d;
+    if(d.length<7) return d.slice(0,2)+'-'+d.slice(2);
+    return d.slice(0,2)+'-'+d.slice(2,d.length-4)+'-'+d.slice(d.length-4);
+  }
+  d=d.slice(0,11);
+  if(d.length<4) return d;
+  if(d.length<8) return d.slice(0,3)+'-'+d.slice(3);
+  return d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(d.length-4);
+}
 function validate(fd){
   const e={};
   if(!fd.name.trim()) e.name='성함을 입력해 주세요.';
   const digits=(fd.tel.match(/\d/g)||[]).length;
-  if(!fd.tel.trim()) e.tel='연락처를 입력해 주세요.'; else if(digits<9||!/^[\d\s\-+()]+$/.test(fd.tel.trim())) e.tel='숫자로 연락처를 입력해 주세요. 예: 010-0000-0000';
+  if(!fd.tel.trim()) e.tel='연락처를 입력해 주세요.'; else if(digits<9||digits>11) e.tel='연락처를 다시 확인해 주세요. 예: 010-0000-0000';
   if(fd.mail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.mail.trim())) e.mail='이메일 형식을 확인해 주세요.';
   if(!fd.area) e.area='문의 영역을 선택해 주세요.';
-  if(!fd.msg.trim()) e.msg='문의 내용을 입력해 주세요.';
+  if(!fd.msg.trim()) e.msg='문의 내용을 입력해 주세요.'; else if(fd.msg.length>MSG_MAX) e.msg=`문의 내용은 ${MSG_MAX}자까지 입력할 수 있습니다.`;
   if(!fd.agree) e.agree='개인정보 수집·이용에 동의해 주세요.';
   return e;
 }
@@ -621,6 +635,18 @@ function bindForm(){
   const ids={...FIELD,agree:'f-agree'};
   const clear=k=>{ const p=$('#e-'+k); if(p) p.textContent=''; const i=$('#'+ids[k]); if(i) i.removeAttribute('aria-invalid'); };
   ['name','tel','mail','area','msg','agree'].forEach(k=>{ const i=$('#'+ids[k]); i.addEventListener('input',()=>clear(k)); i.addEventListener('change',()=>clear(k)); });
+  const tel=$('#f-tel');
+  tel.addEventListener('input',()=>{
+    const before=tel.value.slice(0,tel.selectionStart).replace(/\D/g,'').length;
+    tel.value=fmtTel(tel.value);
+    let n=0,pos=tel.value.length;
+    for(let i=0;i<tel.value.length;i++){ if(/\d/.test(tel.value[i])) n++; if(n===before){ pos=i+1; break; } }
+    if(before===0) pos=0;
+    tel.setSelectionRange(pos,pos);
+  });
+  const msg=$('#f-msg'), cnt=$('#msgCount');
+  const tick=()=>{ cnt.textContent=`${msg.value.length} / ${MSG_MAX}`; };
+  msg.addEventListener('input',tick); tick();
   form.addEventListener('submit',async ev=>{
     ev.preventDefault();
     const fd=read(); const errs=validate(fd);
@@ -684,13 +710,11 @@ function route(){
   const navKey = ['about','why','loc'].includes(key)?'about':(key==='case'?'works':key);
   $$('[data-nav]').forEach(a=>{ a.dataset.nav===navKey ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'); });
   closeMenu();
-  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(key==='works' && prevKey==='works'){
-    const y = $('#worksTop').getBoundingClientRect().top + scrollY - $('header').offsetHeight;
-    scrollTo({top:Math.max(0,y), behavior: reduce?'instant':'smooth'});
-  } else if(key==='works' && prevKey==='case' && scrollMemo[curHash]!=null){
-    scrollTo({top:scrollMemo[curHash],behavior:'instant'});
-  } else { scrollTo({top:0,behavior:'instant'}); }
+  /* 화면이 바뀌면 항상 맨 위로. 사례에서 목록으로 돌아올 때만 보던 자리로 되돌립니다.
+     새 내용이 그려지면서 브라우저가 스크롤을 되돌리는 일이 있어 다음 프레임에 한 번 더 맞춥니다 */
+  const top = (key==='works' && prevKey==='case' && scrollMemo[curHash]!=null) ? scrollMemo[curHash] : 0;
+  scrollTo({top,behavior:'instant'});
+  requestAnimationFrame(()=>scrollTo({top,behavior:'instant'}));
   lastKey=key; lastHash=curHash;
   app.focus({preventScroll:true});
   $('#bar').classList.toggle('hidden', key==='contact');

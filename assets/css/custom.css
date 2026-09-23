@@ -23,7 +23,9 @@ main:focus,main:focus-visible{outline:none}
 }
 .hand{font-family:'NanumPenSlogan','Nanum Pen Script','SKGothic','SKSans','Noto Sans KR',cursive;font-weight:400;letter-spacing:0}
 /* 인사말의 대표 서명 장식. 실제 자필 서명이 아니라 붓글씨 글꼴입니다 */
-.sign{font-family:'Nanum Brush Script',cursive;font-weight:400;letter-spacing:.02em;transform:rotate(-7deg);transform-origin:center}
+/* 대표 자필 서명(누끼 PNG). 폭 기준으로 크기를 잡고 높이는 비율대로 */
+.sign-img{width:13.5rem;max-width:58%;height:auto}
+@media (max-width:480px){.sign-img{width:10.5rem}}
 .wmw{container-type:inline-size}
 .wm{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4cqw;align-items:end}
 /* (주) 글자 높이를 상호명 이미지에 맞춘 값입니다. 글꼴을 바꾸면 다시 맞춰야 합니다 (눈누 기초고딕 700 기준) */

@@ -137,6 +137,7 @@ const IMG = {
  "rep": "assets/img/company/rep.webp",
  "biz": "assets/img/company/biz.webp",
  "con": "assets/img/company/con-cert.webp",
+ "sign": "assets/img/company/sign.webp",
  "logo": "assets/img/brand/logo.webp",
  "wordmark": "assets/img/brand/wordmark.webp"
 };
