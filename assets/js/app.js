@@ -276,7 +276,7 @@ function pageGreeting(){
         <div class="mt-7 grid gap-7 sm:grid-cols-[minmax(0,15rem)_1fr]">
           <div>
             <button class="block w-full text-left" data-zoom="rep" data-title="대표 ${SITE.ceo}" aria-label="대표 사진 크게 보기"><span class="block aspect-[4/5] overflow-hidden rounded-sm bg-plate"><img src="${IMG.rep}" alt="스케치금속건설 대표 ${SITE.ceo}" class="h-full w-full object-cover object-[50%_22%]" decoding="async"></span></button>
-            <div class="mt-4 flex items-center justify-between gap-3"><span class="text-s1 text-ink2">대표이사 <b class="ml-1 text-s3 font-bold text-ink">${SITE.ceo}</b></span><img src="${IMG.sign}" alt="" class="sign-img shrink-0" width="700" height="334" decoding="async" aria-hidden="true"></div>
+            <div class="mt-4 flex items-center justify-between gap-2"><span class="whitespace-nowrap text-s1 text-ink2">대표이사 <b class="ml-1 text-s2 font-bold text-ink">${SITE.ceo}</b></span><img src="${IMG.sign}" alt="" class="sign-img shrink-0" width="700" height="334" decoding="async" aria-hidden="true"></div>
           </div>
           <div class="space-y-4 text-s1 leading-[1.85] md:text-s2 md:leading-[1.85]">
             <p class="text-s3 font-bold leading-[1.5] tracking-[-0.02em]"><span class="text-navy">(주)스케치금속건설 대표 ${SITE.ceo}입니다.</span></p>
