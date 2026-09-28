@@ -14,10 +14,23 @@
 - DNS 는 가비아 네임서버(ns.gabia.co.kr)에 레코드 두 줄: `A @ 216.198.79.1`, `CNAME www 8fa4469a8468b02a.vercel-dns-017.com.`
 - 도메인을 또 붙이면 카카오디벨로퍼스 [앱]>[플랫폼 키]>[JavaScript SDK 도메인]에 반드시 추가할 것
 
-## 구조 (정적 사이트, 해시 라우팅 `#/...`, DB 없음)
+## 구조 (정적 사이트, 진짜 주소 라우팅, DB 없음)
 - 홈 / 회사소개(인사말, WHY SKETCH METAL + 비전, 오시는 길) / 시공사례 8탭(전체, 주요 시공처, 6개 분야) / 견적문의
-- 시공사례 36건, 사진 134장 + 동영상 2개. 카드를 누르면 사례 상세(`#/case/<id>?from=<탭>`)
+- 시공사례 36건, 사진 134장 + 동영상 2개. 카드를 누르면 사례 상세(`/case/<id>/?from=<탭>`)
 - 화면은 `app.js` 의 `page*()` 함수가 그립니다. 사례 데이터는 `TABS`, `CASES`, `CLIENTS`, `FEATURED`, `TOP3`
+
+### 주소와 미리 그려 둔 페이지 (2026-09-28)
+- 주소가 `#/about` 에서 **`/about/` 같은 진짜 경로**로 바뀌었습니다. 네이버 통합검색 결과에 "회사소개 · 시공사례 · 견적문의" 같은 하위 링크가 붙으려면 화면마다 다른 문서 주소여야 하기 때문입니다
+- 화면 전환은 그대로 자바스크립트가 합니다(`go()` + `popstate`). `document` 에 건 클릭 가로채기가 `/` 로 시작하는 링크만 낚아채고 tel·mailto·바깥 주소·`#app` 은 브라우저에 맡깁니다
+- 옛 주소(`#/about` 등)로 들어오면 app.js 맨 아래 IIFE 가 `history.replaceState` 로 새 주소로 바꿔 줍니다. **이 코드를 지우면 예전에 공유된 링크가 전부 홈으로 갑니다**
+- `npm run pages` (= `node scripts/build-pages.mjs`) 가 **51개 화면을 미리 그려 `about/index.html` 처럼 저장**합니다. 네이버 Yeti 는 자바스크립트를 거의 실행하지 못해서, 미리 그려 두지 않으면 크롤러 눈에는 메뉴와 하단 바(434자)밖에 안 보입니다
+  - jsdom 으로 실제 app.js 를 돌려서 뽑기 때문에 화면을 고치면 **반드시 `npm run pages` 를 다시 돌리고 결과물까지 커밋**해야 합니다. 안 하면 검색엔진과 첫 화면만 옛날 내용이 됩니다
+  - `npm run build` = `npm run css && npm run pages`. 여러 번 돌려도 결과가 같습니다(index.html 을 껍데기로 다시 쓸 때 본문과 JSON-LD 를 걷어 냄)
+  - sitemap.xml 과 404.html 도 이 스크립트가 만듭니다. **직접 고치지 마세요**
+- 사진·CSS·JS 경로는 전부 `/assets/...` 로 시작해야 합니다. 상대경로로 두면 `/about/` 에서 `/about/assets/...` 를 찾아 깨집니다
+- 모르는 주소는 홈이 아니라 404 화면을 보여 줍니다(`pageNotFound()`). 서버(Vercel)도 `404.html` 을 내보냅니다
+- `vercel.json` 의 `trailingSlash: true` 로 `/about` → `/about/` 로 넘깁니다
+- 회사 정보는 JSON-LD(`GeneralContractor`)로도 적어 두었고, 홈에는 하위 링크용 `SiteNavigationElement` 목록이 함께 들어갑니다. 회사 정보가 바뀌면 `scripts/build-pages.mjs` 의 `ORG_LD` 도 같이 고칠 것
 
 ## 디자인 결정 (사용자가 직접 정하거나 반복해서 요구한 것)
 - 색: 네이비 `#0A2A4A`, 차콜 `#22272C`/`#111315`, 골드 `#F0B429`(글자용 짙은 골드 `#8F6210`), 연한 회색 `#F2F5F8`/`#EAEEF2`. 로고의 파랑은 상호명 이미지 안에서만 쓰고 UI 색으로는 쓰지 않음

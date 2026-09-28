@@ -5,9 +5,12 @@
   "description": "스케치금속건설 홈페이지 (정적 사이트)",
   "scripts": {
     "css": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/css/tailwind.css --minify",
-    "dev": "python3 -m http.server 8000"
+    "dev": "python3 -m http.server 8000",
+    "pages": "node scripts/build-pages.mjs",
+    "build": "npm run css && npm run pages"
   },
   "devDependencies": {
+    "jsdom": "^29.1.1",
     "tailwindcss": "^3.4.19"
   }
 }

@@ -143,7 +143,7 @@ function casesOf(slug){
 const WORKS_GRID = 'grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12';
 function caseCard(c,from){
   const pos = c.ar<1 ? '50% 32%' : '50% 50%';
-  return `<div class="tab-fade"><a class="case group block w-full text-left" href="#/case/${c.id}?from=${from}" aria-label="${c.title} 자세히 보기">
+  return `<div class="tab-fade"><a class="case group block w-full text-left" href="/case/${c.id}/?from=${from}" aria-label="${c.title} 자세히 보기">
     <span class="block aspect-[4/3] overflow-hidden rounded-sm bg-plate"><img src="${IMG[c.imgs[0]]}" alt="${c.title}" style="object-position:${pos}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" decoding="async" loading="lazy"></span>
     <span class="mt-3 block text-s2 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${c.title}</span>
     <span class="mt-1 block text-s0 text-ink2">${TABNAME[c.tab]}</span>
@@ -202,7 +202,7 @@ function pageHome(){
           <span class="relative inline-block">미대출신의 감각<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="stroke s1" style="--len:230" d="M2 8 C40 3 90 9 150 5 S190 6 198 4" fill="none" stroke="#079BDA" stroke-width="3.2" stroke-linecap="round"/></svg></span><br>
           <span class="relative inline-block">금속기술의 완성<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path class="stroke s2" style="--len:230" d="M2 6 C50 10 100 3 160 7 S190 5 198 7" fill="none" stroke="#EF9A22" stroke-width="3.2" stroke-linecap="round"/></svg></span>
         </p>
-        <div class="mt-10"><a href="#/contact" class="${BTN}">견적 문의하기</a></div>
+        <div class="mt-10"><a href="/contact/" class="${BTN}">견적 문의하기</a></div>
       </div>
     </div>
   </section>
@@ -236,7 +236,7 @@ function pageHome(){
       </div>
       <div class="lg:col-span-5" data-reveal style="--i:1">
         <p class="text-s3 font-bold leading-[1.75] md:text-s4"><a href="${SITE.telHref}" class="hover:underline">Tel) 051-895-0888</a><br><a href="mailto:${SITE.email}" class="break-all hover:underline">E-mail) ${SITE.email}</a></p>
-        <a href="#/contact" class="btn-metal on-gold mt-8 inline-flex items-center justify-center rounded-sm px-7 py-2.5 text-s2 font-bold">견적 문의하기</a>
+        <a href="/contact/" class="btn-metal on-gold mt-8 inline-flex items-center justify-center rounded-sm px-7 py-2.5 text-s2 font-bold">견적 문의하기</a>
       </div>
     </div>
   </section>`;
@@ -394,10 +394,10 @@ async function initKakaoMap(){
 function pageWorks(slug){
   if(!TABNAME[slug]) slug='all';
   const t = TABS.find(t=>t.slug===slug);
-  const tabs = TABS.map(x=>`<a href="#/works/${x.slug}" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}</a>`).join('');
+  const tabs = TABS.map(x=>`<a href="/works/${x.slug}/" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}</a>`).join('');
   let body;
   if(slug==='clients'){
-    const chips = CLIENTS.map((g,gi)=>`<a href="#/works/clients" data-jump="grp${gi}" class="border border-ink px-4 py-2 text-s1 font-bold transition-colors hover:bg-ink hover:text-paper">${g.name}</a>`).join('');
+    const chips = CLIENTS.map((g,gi)=>`<a href="/works/clients/" data-jump="grp${gi}" class="border border-ink px-4 py-2 text-s1 font-bold transition-colors hover:bg-ink hover:text-paper">${g.name}</a>`).join('');
     body = `<div class="mb-10 flex flex-wrap gap-2" aria-label="시공처 바로가기">${chips}</div>` + CLIENTS.map((g,gi)=>`<div id="grp${gi}" class="grp ${gi?'mt-16':''}"><h2 class="mb-6 border-b-2 border-ink pb-3 text-s4 font-bold tracking-[-0.02em]">${g.name}</h2><div class="${WORKS_GRID}">${g.ids.map(id=>caseCard(BY[id],'clients')).join('')}</div></div>`).join('');
   } else {
     body = `<div class="${WORKS_GRID}">${casesOf(slug).map(c=>caseCard(c,slug)).join('')}</div>`;
@@ -410,13 +410,13 @@ function pageWorks(slug){
 /* ============ 시공사례 상세 ============ */
 let GAL={id:'',i:0};
 function pageCase(id,from){
-  const c = BY[id]; if(!c) return pageWorks('all');
+  const c = BY[id]; if(!c) return pageNotFound();
   const fromSlug = TABNAME[from]?from:c.tab;
   const list = casesOf(fromSlug); const k = list.findIndex(x=>x.id===id);
   const prev = k>0?list[k-1]:null, next = k>=0&&k<list.length-1?list[k+1]:null;
   GAL={id,i:0};
   const grp = groupOf(id);
-  const nav = (x,label)=> x?`<a href="#/case/${x.id}?from=${fromSlug}" class="group grid grid-cols-[5.5rem_1fr] items-center gap-4 border border-rule p-3 transition-colors hover:border-ink"><span class="block aspect-[4/3] overflow-hidden bg-plate"><img src="${IMG[x.imgs[0]]}" alt="" class="h-full w-full object-cover" decoding="async"></span><span><span class="block text-s0 text-ink2">${label}</span><b class="block text-s1 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${x.title}</b></span></a>`:'<span></span>';
+  const nav = (x,label)=> x?`<a href="/case/${x.id}/?from=${fromSlug}" class="group grid grid-cols-[5.5rem_1fr] items-center gap-4 border border-rule p-3 transition-colors hover:border-ink"><span class="block aspect-[4/3] overflow-hidden bg-plate"><img src="${IMG[x.imgs[0]]}" alt="" class="h-full w-full object-cover" decoding="async"></span><span><span class="block text-s0 text-ink2">${label}</span><b class="block text-s1 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${x.title}</b></span></a>`:'<span></span>';
   const multi = c.imgs.length>1;
   const chips = (c.tags||[]).map(t=>`<span class="rounded-full bg-plate px-4 py-2 text-s1 text-ink2">#${t}</span>`).join('');
   const arrowBtn = (dir,label,path)=>`<button data-gstep="${dir}" class="absolute ${dir<0?'left-4':'right-4'} top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-rule bg-paper/90 shadow-sm transition-colors hover:bg-ink hover:text-paper" aria-label="${label}"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></button>`;
@@ -425,7 +425,7 @@ function pageCase(id,from){
   const fact = (icon,label,value)=>`<div class="flex items-center gap-3.5"><span>${icon}</span><span class="min-w-0"><span class="block text-s0 text-ink2">${label}</span><span class="block text-s2 font-bold leading-snug">${value}</span></span></div>`;
   return `
   <section class="${WRAP} pb-6 pt-10 md:pt-14">
-    <nav class="flex flex-wrap items-center gap-2 text-s1 text-ink2" aria-label="현재 위치"><a href="#/works/all" class="hover:text-ink hover:underline">시공사례</a><span aria-hidden="true">/</span><a href="#/works/${fromSlug}" class="hover:text-ink hover:underline">${TABNAME[fromSlug]}</a></nav>
+    <nav class="flex flex-wrap items-center gap-2 text-s1 text-ink2" aria-label="현재 위치"><a href="/works/all/" class="hover:text-ink hover:underline">시공사례</a><span aria-hidden="true">/</span><a href="/works/${fromSlug}/" class="hover:text-ink hover:underline">${TABNAME[fromSlug]}</a></nav>
     <h1 class="mt-4 text-s6 font-bold leading-[1.15] tracking-[-0.02em] md:text-s7">${c.title}</h1>
     ${chips?`<div class="mt-6 flex flex-wrap gap-2.5">${chips}</div>`:''}
   </section>
@@ -438,12 +438,12 @@ function pageCase(id,from){
     ${multi?`<div class="mt-3 flex gap-3 overflow-x-auto pb-1" id="galThumbs">${c.imgs.map((s,i)=>`<button data-gi="${i}" aria-label="${isVid(s)?'동영상':'사진'} ${i+1}" aria-current="${i===0}" class="relative aspect-[4/3] w-28 shrink-0 overflow-hidden border-2 border-transparent opacity-70 transition aria-[current=true]:border-gold aria-[current=true]:opacity-100 hover:opacity-100 md:w-32">${isVid(s)?`<video src="${VID[s]}" preload="metadata" muted playsinline class="pointer-events-none h-full w-full bg-ink object-cover"></video><span class="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink/35"><svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>`:`<img src="${IMG[s]}" alt="" class="h-full w-full object-cover" decoding="async">`}</button>`).join('')}</div>`:''}
     <div class="mt-10 grid items-center gap-7 border-t border-rule pt-8 md:grid-cols-[1fr_auto] md:gap-10">
       <div class="flex flex-wrap items-center gap-x-12 gap-y-6">
-        ${grp?fact(PIN,'시공처',`<a href="#/works/clients" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${grp}</a>`):''}
-        ${fact(LAYERS,'분야',`<a href="#/works/${c.tab}" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${TABNAME[c.tab]}</a>`)}
+        ${grp?fact(PIN,'시공처',`<a href="/works/clients/" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${grp}</a>`):''}
+        ${fact(LAYERS,'분야',`<a href="/works/${c.tab}/" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${TABNAME[c.tab]}</a>`)}
       </div>
-      <a href="#/contact?area=${c.tab}" class="${BTN} w-full px-9 py-4 md:w-auto">이 공사 문의하기 <span aria-hidden="true">&rarr;</span></a>
+      <a href="/contact/?area=${c.tab}" class="${BTN} w-full px-9 py-4 md:w-auto">이 공사 문의하기 <span aria-hidden="true">&rarr;</span></a>
     </div>
-    <a href="#/works/${fromSlug}" class="${LINK} mt-8 inline-block text-s1">목록으로 돌아가기</a>
+    <a href="/works/${fromSlug}/" class="${LINK} mt-8 inline-block text-s1">목록으로 돌아가기</a>
   </section>
   <section class="${WRAP} border-t border-rule pb-20 pt-10 md:pb-28"><div class="grid gap-4 md:grid-cols-2">${nav(prev,'이전 사례')}${nav(next,'다음 사례')}</div></section>`;
 }
@@ -566,7 +566,7 @@ function pageContact(area){
         <div class="mt-12">
           ${row('Tel',`<a href="${SITE.telHref}" class="whitespace-nowrap font-display text-s5 font-semibold tracking-[-0.01em] hover:text-navy">${SITE.tel}</a>`,'')}
           ${row('E-mail',`<a href="mailto:${SITE.email}" class="break-all text-s4 font-medium hover:text-navy">${SITE.email}</a>`,'')}
-          ${row('소재지',`<p class="text-s3 font-medium leading-[1.5]">${SITE.address}</p>`,`<a href="#/about/location" class="${LINK} text-s1">오시는 길</a>`)}
+          ${row('소재지',`<p class="text-s3 font-medium leading-[1.5]">${SITE.address}</p>`,`<a href="/about/location/" class="${LINK} text-s1">오시는 길</a>`)}
           ${row('법인',`<p class="text-s3 font-medium">(주)스케치금속건설</p>`,`사업자등록번호 ${SITE.bizNo}<br>건설업등록번호 ${SITE.conNo}<br>대표 ${SITE.ceo}`)}
         </div>
       </div>
@@ -585,7 +585,7 @@ function pageContact(area){
           <div><label for="f-area" class="${lab}">문의 영역 <span class="text-gold-deep" aria-hidden="true">*</span></label><select id="f-area" required class="${fld}" aria-describedby="e-area"><option value="">선택해 주세요</option>${opts}</select><p id="e-area" class="err mt-1 text-s1" role="alert"></p></div>
           <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" maxlength="50" class="${fld}" placeholder="예: 부산 해운대구"></div>
           <div><div class="flex items-baseline justify-between gap-3"><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><span id="msgCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${MSG_MAX}</span></div><textarea id="f-msg" rows="6" required maxlength="${MSG_MAX}" class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
-          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="#/privacy" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
+          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="/privacy/" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
           <button id="qSubmit" type="submit" class="${BTN} w-full !py-3.5">견적 문의 보내기<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
           <p id="qNote" class="text-center text-s1 leading-relaxed text-ink2">※ 급한 문의는 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 직접 연락해 주세요.</p>
         </form>
@@ -670,7 +670,7 @@ function showQuoteDone(box,fd,demo){
     <dl class="mt-7 border-t-2 border-ink"><div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-rule py-3 text-s1"><dt class="text-ink2">문의 영역</dt><dd>${esc(area)}</dd></div><div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-rule py-3 text-s1"><dt class="text-ink2">연락처</dt><dd>${esc(fd.tel.trim())}</dd></div></dl>
     <p class="mt-6 text-s1 text-ink2">급하시면 <a class="font-bold underline decoration-ink decoration-[1.5px] underline-offset-4" href="${SITE.telHref}">${SITE.tel}</a>로 전화 주세요.</p>
     ${demo?'<p class="mt-4 border-l-4 border-gold bg-plate px-4 py-3 text-s1">시안 화면입니다. 실제 메일은 발송되지 않았습니다.</p>':''}
-    <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3"><a href="#/" class="${BTN_LINE}">홈으로</a><a href="#/works" class="${LINK} self-center">시공사례 보기</a></div></div>`;
+    <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3"><a href="/" class="${BTN_LINE}">홈으로</a><a href="/works/" class="${LINK} self-center">시공사례 보기</a></div></div>`;
   box.scrollIntoView({block:'start',behavior:'smooth'});
 }
 function showQuoteFail(box,retry){
@@ -682,45 +682,81 @@ function showQuoteFail(box,retry){
   $('#qRetry').addEventListener('click',retry);
 }
 
+/* ============ 없는 주소 ============ */
+function pageNotFound(){
+  return `
+  <section class="${WRAP} py-24 text-center md:py-32">
+    <p class="text-s1 font-bold tracking-[0.2em] text-ink2">404</p>
+    <h1 class="mt-4 text-s6 font-bold tracking-[-0.02em] md:text-s7">페이지를 찾을 수 없습니다</h1>
+    <p class="mt-5 text-s2 text-ink2">주소가 바뀌었거나 없는 페이지입니다.</p>
+    <div class="mt-10 flex flex-wrap justify-center gap-4">
+      <a href="/" class="rounded-sm border border-ink px-7 py-2.5 text-s2 font-bold transition-colors hover:bg-ink hover:text-paper">홈으로</a>
+      <a href="/works/" class="rounded-sm border border-ink px-7 py-2.5 text-s2 font-bold transition-colors hover:bg-ink hover:text-paper">시공사례 보기</a>
+      <a href="/contact/" class="btn-metal rounded-sm px-7 py-2.5 text-s2 font-bold">견적 문의하기</a>
+    </div>
+  </section>`;
+}
+
 /* ============ 라우터 ============ */
-const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침'};
-let lastKey='', lastHash='';
+const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침', nf:'페이지를 찾을 수 없습니다'};
+let lastKey='', lastPath='';
 const scrollMemo={};
-function parseHash(){
-  const raw=location.hash.replace(/^#\/?/,''); const [ps,qs='']=raw.split('?');
-  return {parts:ps.split('/').filter(Boolean), q:Object.fromEntries(new URLSearchParams(qs))};
+/* 주소는 /about/ /works/all/ /case/c39/ 처럼 진짜 경로를 씁니다.
+   검색엔진이 화면마다 다른 문서로 인식해야 하위 링크가 붙기 때문입니다 */
+function parseRoute(){
+  const parts=location.pathname.replace(/^\/+|\/+$/g,'').split('/').filter(Boolean);
+  return {parts, q:Object.fromEntries(new URLSearchParams(location.search))};
+}
+function go(url,replace){
+  if(url===location.pathname+location.search) return;
+  history[replace?'replaceState':'pushState'](null,'',url);
+  route();
 }
 function route(){
-  if(lastKey==='works') scrollMemo[lastHash]=scrollY;
+  if(lastKey==='works') scrollMemo[lastPath]=scrollY;
   if(logoCleanup){ logoCleanup(); logoCleanup=null; }
-  const {parts,q}=parseHash(); const [p0,p1]=parts;
+  const {parts,q}=parseRoute(); const [p0,p1]=parts;
   let key='home', html;
   if(p0==='about'){
     if(p1==='why'){key='why';html=pageWhy();}
     else if(p1==='location'){key='loc';html=pageLocation();}
     else {key='about';html=pageGreeting();}
-  } else if(p0==='works'){ key='works'; html=pageWorks(p1||'all'); }
-  else if(p0==='case'){ key='case'; html=pageCase(p1,q.from); }
+  } else if(p0==='works' && (!p1 || TABNAME[p1])){ key='works'; html=pageWorks(p1||'all'); }
+  else if(p0==='case' && BY[p1]){ key='case'; html=pageCase(p1,q.from); }
   else if(p0==='contact'){ key='contact'; html=pageContact(q.area); }
   else if(p0==='privacy'){ key='privacy'; html=pagePrivacy(); }
-  else { html=pageHome(); }
-  const prevKey=lastKey, curHash=location.hash;
+  else if(!p0){ html=pageHome(); }
+  else { key='nf'; html=pageNotFound(); }   /* 모르는 주소는 홈이 아니라 404 화면 */
+  const prevKey=lastKey, curPath=location.pathname+location.search;
   app.innerHTML = html;
-  document.title = key==='home' ? TITLES.home : `${(key==='case'&&BY[p1])?BY[p1].title:TITLES[key]} | ${SITE.name}`;
+  /* 시공사례는 탭 이름까지 제목에 넣습니다. 검색 결과에서 화면이 구분되어야 하위 링크가 붙습니다 */
+  const pageName = key==='case' && BY[p1] ? BY[p1].title
+    : key==='works' && p1 && p1!=='all' && TABNAME[p1] ? `${TABNAME[p1]} | 시공사례`
+    : TITLES[key];
+  document.title = key==='home' ? TITLES.home : `${pageName} | ${SITE.name}`;
   const navKey = ['about','why','loc'].includes(key)?'about':(key==='case'?'works':key);
   $$('[data-nav]').forEach(a=>{ a.dataset.nav===navKey ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'); });
   closeMenu();
   /* 화면이 바뀌면 항상 맨 위로. 사례에서 목록으로 돌아올 때만 보던 자리로 되돌립니다.
      새 내용이 그려지면서 브라우저가 스크롤을 되돌리는 일이 있어 다음 프레임에 한 번 더 맞춥니다 */
-  const top = (key==='works' && prevKey==='case' && scrollMemo[curHash]!=null) ? scrollMemo[curHash] : 0;
+  const top = (key==='works' && prevKey==='case' && scrollMemo[curPath]!=null) ? scrollMemo[curPath] : 0;
   scrollTo({top,behavior:'instant'});
   requestAnimationFrame(()=>scrollTo({top,behavior:'instant'}));
-  lastKey=key; lastHash=curHash;
+  lastKey=key; lastPath=curPath;
   app.focus({preventScroll:true});
   $('#bar').classList.toggle('hidden', key==='contact');
   bindPage(); bindForm(); setupReveal(); initKakaoMap(); if(key==='home') initLogo3D();
 }
-addEventListener('hashchange', route);
+addEventListener('popstate', route);
+/* 사이트 안의 링크는 새로 고치지 않고 화면만 바꿉니다 */
+document.addEventListener('click',e=>{
+  if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+  const a=e.target.closest('a'); if(!a||a.hasAttribute('download')) return;
+  if(a.target&&a.target!=='_self') return;
+  const href=a.getAttribute('href')||'';
+  if(!href.startsWith('/')) return;   /* 바깥 주소·tel·mailto·#앵커는 브라우저에 맡깁니다 */
+  e.preventDefault(); go(href);
+});
 
 /* ============ 상단 가로 메뉴 (마우스를 올리면 검은 띠로 펼쳐짐) ============ */
 const hdr = $('#hdr');
@@ -820,7 +856,7 @@ function bindPage(){
     catch(e){ msg.textContent='복사되지 않았습니다. 주소를 직접 선택해 복사해 주세요.'; }
   });
   const toCerts = $('[data-to-certs]');
-  if(toCerts) toCerts.addEventListener('click',e=>{ e.preventDefault(); location.hash='#/about'; setTimeout(()=>{ const el=$('#certs'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },80); });
+  if(toCerts) toCerts.addEventListener('click',e=>{ e.preventDefault(); go('/about/'); setTimeout(()=>{ const el=$('#certs'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },80); });
   $$('[data-jump]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const el=document.getElementById(a.dataset.jump); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }));
 }
 
@@ -844,5 +880,15 @@ let tx=null;
 document.addEventListener('touchstart',e=>{ if(e.target.closest('#galStage img')) tx=e.touches[0].clientX; },{passive:true});
 document.addEventListener('touchend',e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) galShow(GAL.i+(dx<0?1:-1)); tx=null; });
 $('#skip').addEventListener('click',e=>{ e.preventDefault(); app.focus(); app.scrollIntoView(); });
+
+/* 예전 주소(#/about 같은 형태)로 들어오면 새 주소로 조용히 바꿔 줍니다.
+   검색엔진·공유 링크에 옛 주소가 남아 있어도 같은 화면이 나오게 하기 위한 것입니다 */
+(function(){
+  const h=location.hash;
+  if(!h.startsWith('#/')) return;
+  const [raw,qs='']=h.slice(1).split('?');
+  const seg=raw.replace(/^\/+|\/+$/g,'');
+  history.replaceState(null,'',(seg?'/'+seg+'/':'/')+(qs?'?'+qs:''));
+})();
 
 route();
