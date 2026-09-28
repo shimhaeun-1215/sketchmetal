@@ -177,8 +177,8 @@ function whyBlock(){
 function pageHome(){
   const plates = TABS.filter(t=>t.home);
   const tile = (href,img,alt,name,i,cls) => `<a href="${href}" data-reveal style="--i:${i}" class="tile group block ${cls||''}"><span class="tile-in block"><span class="tile-media relative block aspect-[4/3] overflow-hidden bg-plate"><img src="${img}" alt="${alt}" class="tile-img h-full w-full object-cover" decoding="async"></span><b class="mt-3 block border-t-2 border-ink pt-3 font-serif text-s3 font-semibold tracking-[-0.01em] md:text-s4">${name}</b></span></a>`;
-  const plateHtml = plates.map((t,i)=>tile(`#/works/${t.slug}`,IMG[t.home],t.name,t.name,i%3)).join('');
-  const topHtml = TOP3.map((t,i)=>tile(`#/case/${t.id}?from=clients`,IMG[t.img],t.name,t.name,i)).join('');
+  const plateHtml = plates.map((t,i)=>tile(`/works/${t.slug}/`,IMG[t.home],t.name,t.name,i%3)).join('');
+  const topHtml = TOP3.map((t,i)=>tile(`/case/${t.id}/?from=clients`,IMG[t.img],t.name,t.name,i)).join('');
   return `
   <section id="hero" class="relative overflow-hidden bg-mist" aria-labelledby="hT">
     <div class="${WRAP} grid items-center gap-x-10 md:grid-cols-12 md:min-h-[calc(100dvh-5.6rem)]">
@@ -247,7 +247,7 @@ function pageHead(title,sub){
   return `<div class="border-b border-rule"><div class="${WRAP} pb-8 pt-14 md:pt-20"><h1 class="text-s7 font-bold leading-[1.1] tracking-[-0.02em] md:text-s8">${title}</h1>${sub?`<p class="mt-4 max-w-[40ch] text-s3 text-ink2">${sub}</p>`:''}</div></div>`;
 }
 function aboutTabs(cur){
-  const items=[['greet','인사말','#/about'],['why','WHY SKETCH METAL','#/about/why'],['loc','오시는 길','#/about/location']];
+  const items=[['greet','인사말','/about/'],['why','WHY SKETCH METAL','/about/why/'],['loc','오시는 길','/about/location/']];
   return `<div class="border-b border-rule bg-white"><nav class="${WRAP} flex gap-1 overflow-x-auto" aria-label="회사소개 메뉴">${items.map(([k,n,h])=>`<a href="${h}" ${k===cur?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-4 py-3.5 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-navy">${n}</a>`).join('')}</nav></div>`;
 }
 /* 제목 띠: 네이비 바탕에 철골 사진과 도면 격자, 아래는 금색 선 */

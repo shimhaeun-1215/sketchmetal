@@ -27,6 +27,7 @@
   - jsdom 으로 실제 app.js 를 돌려서 뽑기 때문에 화면을 고치면 **반드시 `npm run pages` 를 다시 돌리고 결과물까지 커밋**해야 합니다. 안 하면 검색엔진과 첫 화면만 옛날 내용이 됩니다
   - `npm run build` = `npm run css && npm run pages`. 여러 번 돌려도 결과가 같습니다(index.html 을 껍데기로 다시 쓸 때 본문과 JSON-LD 를 걷어 냄)
   - sitemap.xml 과 404.html 도 이 스크립트가 만듭니다. **직접 고치지 마세요**
+- 검색결과·브라우저 탭 아이콘: 뿌리의 `favicon.ico`(16/32/48/64 한 파일)와 `assets/img/brand/favicon.png`(96px) 두 가지를 `index.html` 머리에 선언합니다. 둘 다 `logo.webp` 의 잉크 영역을 잘라 정사각형 가운데에 놓고 줄인 것입니다. **구글은 홈 화면의 선언만 봅니다.** 아이콘을 바꿔도 구글 검색결과에 반영되는 데 며칠~몇 주 걸리고, 주소를 바꾸면 처음부터 다시 걸리므로 파일 이름은 그대로 두고 내용만 교체할 것
 - 사진·CSS·JS 경로는 전부 `/assets/...` 로 시작해야 합니다. 상대경로로 두면 `/about/` 에서 `/about/assets/...` 를 찾아 깨집니다
 - 모르는 주소는 홈이 아니라 404 화면을 보여 줍니다(`pageNotFound()`). 서버(Vercel)도 `404.html` 을 내보냅니다
 - `vercel.json` 의 `trailingSlash: true` 로 `/about` → `/about/` 로 넘깁니다
