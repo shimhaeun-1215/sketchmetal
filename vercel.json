@@ -3,6 +3,7 @@
   "trailingSlash": true,
   "cleanUrls": false,
   "redirects": [
-    { "source": "/works/all", "destination": "/works/", "permanent": true }
+    { "source": "/works/all", "destination": "/works/", "permanent": true },
+    { "source": "/works/all/", "destination": "/works/", "permanent": true }
   ]
 }
