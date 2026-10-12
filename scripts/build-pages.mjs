@@ -120,7 +120,8 @@ function buildHtml(route, { html, title }, desc) {
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /* ---- 만들 주소 목록 ---- */
-const tabSlugs = [...appJs.matchAll(/\{slug:'([a-z]+)'/g)].map(m => m[1]);
+/* 'all' 은 /works/ 가 대표 주소라서 /works/all/ 페이지를 따로 만들지 않습니다 */
+const tabSlugs = [...appJs.matchAll(/\{slug:'([a-z]+)'/g)].map(m => m[1]).filter(s => s !== 'all');
 const caseIds = [...appJs.matchAll(/C\('(c[\w]+)'/g)].map(m => m[1]);
 
 const routes = [

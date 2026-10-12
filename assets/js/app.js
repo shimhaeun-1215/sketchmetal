@@ -106,6 +106,15 @@ const CASES = [
   C('c47_51','safety','벡스코 코킹 (전시장 상부·창호유리)'),
   C('c17','safety','옥상 철재 안전난간'),
 ];
+/* '전체' 탭 주소는 /works/ 하나뿐입니다. /works/all/ 을 따로 두면 글자까지 똑같은 중복 페이지가 되어
+   구글이 둘 중 뭐가 진짜인지 못 고릅니다 */
+const worksUrl = slug => (!slug || slug==='all') ? '/works/' : `/works/${slug}/`;
+/* 사례 상세는 어느 탭에서 들어왔는지 알아야 '목록으로 돌아가기'와 이전/다음이 그 탭 기준이 됩니다.
+   예전에는 주소에 ?from= 을 붙였는데, 사례 하나가 주소 8개로 보여서 크롤링이 낭비됐습니다.
+   이제 주소는 /case/<id>/ 하나로 두고 어느 탭이었는지는 브라우저에만 기억시킵니다 */
+let fromTab = null;
+const rememberTab = slug => { fromTab = slug; try{ sessionStorage.setItem('fromTab', slug); }catch(e){} };
+const recallTab = () => { if(fromTab) return fromTab; try{ return sessionStorage.getItem('fromTab'); }catch(e){ return null; } };
 const BY = Object.fromEntries(CASES.map(c=>[c.id,c]));
 const TABNAME = Object.fromEntries(TABS.map(t=>[t.slug,t.name]));
 const CLIENTS = [
@@ -143,7 +152,7 @@ function casesOf(slug){
 const WORKS_GRID = 'grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12';
 function caseCard(c,from){
   const pos = c.ar<1 ? '50% 32%' : '50% 50%';
-  return `<div class="tab-fade"><a class="case group block w-full text-left" href="/case/${c.id}/?from=${from}" aria-label="${c.title} 자세히 보기">
+  return `<div class="tab-fade"><a class="case group block w-full text-left" href="/case/${c.id}/" aria-label="${c.title} 자세히 보기">
     <span class="block aspect-[4/3] overflow-hidden rounded-sm bg-plate"><img src="${IMG[c.imgs[0]]}" alt="${c.title}" style="object-position:${pos}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" decoding="async" loading="lazy"></span>
     <span class="mt-3 block text-s2 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${c.title}</span>
     <span class="mt-1 block text-s0 text-ink2">${TABNAME[c.tab]}</span>
@@ -178,7 +187,7 @@ function pageHome(){
   const plates = TABS.filter(t=>t.home);
   const tile = (href,img,alt,name,i,cls) => `<a href="${href}" data-reveal style="--i:${i}" class="tile group block ${cls||''}"><span class="tile-in block"><span class="tile-media relative block aspect-[4/3] overflow-hidden bg-plate"><img src="${img}" alt="${alt}" class="tile-img h-full w-full object-cover" decoding="async"></span><b class="mt-3 block border-t-2 border-ink pt-3 font-serif text-s3 font-semibold tracking-[-0.01em] md:text-s4">${name}</b></span></a>`;
   const plateHtml = plates.map((t,i)=>tile(`/works/${t.slug}/`,IMG[t.home],t.name,t.name,i%3)).join('');
-  const topHtml = TOP3.map((t,i)=>tile(`/case/${t.id}/?from=clients`,IMG[t.img],t.name,t.name,i)).join('');
+  const topHtml = TOP3.map((t,i)=>tile(`/case/${t.id}/`,IMG[t.img],t.name,t.name,i)).join('');
   return `
   <section id="hero" class="relative overflow-hidden bg-mist" aria-labelledby="hT">
     <div class="${WRAP} grid items-center gap-x-10 md:grid-cols-12 md:min-h-[calc(100dvh-5.6rem)]">
@@ -394,7 +403,7 @@ async function initKakaoMap(){
 function pageWorks(slug){
   if(!TABNAME[slug]) slug='all';
   const t = TABS.find(t=>t.slug===slug);
-  const tabs = TABS.map(x=>`<a href="/works/${x.slug}/" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}</a>`).join('');
+  const tabs = TABS.map(x=>`<a href="${worksUrl(x.slug)}" ${x.slug===slug?'aria-current="page"':''} class="shrink-0 border-b-[3px] border-transparent px-3 py-4 text-s1 font-bold text-ink2 transition-colors hover:text-ink aria-[current=page]:border-gold aria-[current=page]:text-ink lg:px-3.5">${x.name}</a>`).join('');
   let body;
   if(slug==='clients'){
     const chips = CLIENTS.map((g,gi)=>`<a href="/works/clients/" data-jump="grp${gi}" class="border border-ink px-4 py-2 text-s1 font-bold transition-colors hover:bg-ink hover:text-paper">${g.name}</a>`).join('');
@@ -409,14 +418,15 @@ function pageWorks(slug){
 
 /* ============ 시공사례 상세 ============ */
 let GAL={id:'',i:0};
-function pageCase(id,from){
+function pageCase(id){
   const c = BY[id]; if(!c) return pageNotFound();
-  const fromSlug = TABNAME[from]?from:c.tab;
+  const back = recallTab();
+  const fromSlug = TABNAME[back]?back:c.tab;
   const list = casesOf(fromSlug); const k = list.findIndex(x=>x.id===id);
   const prev = k>0?list[k-1]:null, next = k>=0&&k<list.length-1?list[k+1]:null;
   GAL={id,i:0};
   const grp = groupOf(id);
-  const nav = (x,label)=> x?`<a href="/case/${x.id}/?from=${fromSlug}" class="group grid grid-cols-[5.5rem_1fr] items-center gap-4 border border-rule p-3 transition-colors hover:border-ink"><span class="block aspect-[4/3] overflow-hidden bg-plate"><img src="${IMG[x.imgs[0]]}" alt="" class="h-full w-full object-cover" decoding="async"></span><span><span class="block text-s0 text-ink2">${label}</span><b class="block text-s1 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${x.title}</b></span></a>`:'<span></span>';
+  const nav = (x,label)=> x?`<a href="/case/${x.id}/" class="group grid grid-cols-[5.5rem_1fr] items-center gap-4 border border-rule p-3 transition-colors hover:border-ink"><span class="block aspect-[4/3] overflow-hidden bg-plate"><img src="${IMG[x.imgs[0]]}" alt="" class="h-full w-full object-cover" decoding="async"></span><span><span class="block text-s0 text-ink2">${label}</span><b class="block text-s1 font-bold leading-snug group-hover:underline group-hover:decoration-gold-deep group-hover:decoration-[1.5px] group-hover:underline-offset-4">${x.title}</b></span></a>`:'<span></span>';
   const multi = c.imgs.length>1;
   const chips = (c.tags||[]).map(t=>`<span class="rounded-full bg-plate px-4 py-2 text-s1 text-ink2">#${t}</span>`).join('');
   const arrowBtn = (dir,label,path)=>`<button data-gstep="${dir}" class="absolute ${dir<0?'left-4':'right-4'} top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-rule bg-paper/90 shadow-sm transition-colors hover:bg-ink hover:text-paper" aria-label="${label}"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg></button>`;
@@ -425,7 +435,7 @@ function pageCase(id,from){
   const fact = (icon,label,value)=>`<div class="flex items-center gap-3.5"><span>${icon}</span><span class="min-w-0"><span class="block text-s0 text-ink2">${label}</span><span class="block text-s2 font-bold leading-snug">${value}</span></span></div>`;
   return `
   <section class="${WRAP} pb-6 pt-10 md:pt-14">
-    <nav class="flex flex-wrap items-center gap-2 text-s1 text-ink2" aria-label="현재 위치"><a href="/works/all/" class="hover:text-ink hover:underline">시공사례</a><span aria-hidden="true">/</span><a href="/works/${fromSlug}/" class="hover:text-ink hover:underline">${TABNAME[fromSlug]}</a></nav>
+    <nav class="flex flex-wrap items-center gap-2 text-s1 text-ink2" aria-label="현재 위치"><a href="/works/" class="hover:text-ink hover:underline">시공사례</a><span aria-hidden="true">/</span><a href="${worksUrl(fromSlug)}" class="hover:text-ink hover:underline">${TABNAME[fromSlug]}</a></nav>
     <h1 class="mt-4 text-s6 font-bold leading-[1.15] tracking-[-0.02em] md:text-s7">${c.title}</h1>
     ${chips?`<div class="mt-6 flex flex-wrap gap-2.5">${chips}</div>`:''}
   </section>
@@ -439,11 +449,11 @@ function pageCase(id,from){
     <div class="mt-10 grid items-center gap-7 border-t border-rule pt-8 md:grid-cols-[1fr_auto] md:gap-10">
       <div class="flex flex-wrap items-center gap-x-12 gap-y-6">
         ${grp?fact(PIN,'시공처',`<a href="/works/clients/" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${grp}</a>`):''}
-        ${fact(LAYERS,'분야',`<a href="/works/${c.tab}/" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${TABNAME[c.tab]}</a>`)}
+        ${fact(LAYERS,'분야',`<a href="${worksUrl(c.tab)}" class="hover:underline hover:decoration-gold-deep hover:decoration-[1.5px] hover:underline-offset-4">${TABNAME[c.tab]}</a>`)}
       </div>
       <a href="/contact/?area=${c.tab}" class="${BTN} w-full px-9 py-4 md:w-auto">이 공사 문의하기 <span aria-hidden="true">&rarr;</span></a>
     </div>
-    <a href="/works/${fromSlug}/" class="${LINK} mt-8 inline-block text-s1">목록으로 돌아가기</a>
+    <a href="${worksUrl(fromSlug)}" class="${LINK} mt-8 inline-block text-s1">목록으로 돌아가기</a>
   </section>
   <section class="${WRAP} border-t border-rule pb-20 pt-10 md:pb-28"><div class="grid gap-4 md:grid-cols-2">${nav(prev,'이전 사례')}${nav(next,'다음 사례')}</div></section>`;
 }
@@ -701,7 +711,7 @@ function pageNotFound(){
 const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침', nf:'페이지를 찾을 수 없습니다'};
 let lastKey='', lastPath='';
 const scrollMemo={};
-/* 주소는 /about/ /works/all/ /case/c39/ 처럼 진짜 경로를 씁니다.
+/* 주소는 /about/ /works/structures/ /case/c39/ 처럼 진짜 경로를 씁니다.
    검색엔진이 화면마다 다른 문서로 인식해야 하위 링크가 붙기 때문입니다 */
 function parseRoute(){
   const parts=location.pathname.replace(/^\/+|\/+$/g,'').split('/').filter(Boolean);
@@ -721,8 +731,12 @@ function route(){
     if(p1==='why'){key='why';html=pageWhy();}
     else if(p1==='location'){key='loc';html=pageLocation();}
     else {key='about';html=pageGreeting();}
-  } else if(p0==='works' && (!p1 || TABNAME[p1])){ key='works'; html=pageWorks(p1||'all'); }
-  else if(p0==='case' && BY[p1]){ key='case'; html=pageCase(p1,q.from); }
+  } else if(p0==='works' && (!p1 || TABNAME[p1])){
+    /* 옛 주소 /works/all/ 로 들어오면 대표 주소 /works/ 로 정리합니다 */
+    if(p1==='all'){ history.replaceState(null,'','/works/'+location.search); }
+    key='works'; rememberTab(p1||'all'); html=pageWorks(p1||'all');
+  }
+  else if(p0==='case' && BY[p1]){ key='case'; html=pageCase(p1); }
   else if(p0==='contact'){ key='contact'; html=pageContact(q.area); }
   else if(p0==='privacy'){ key='privacy'; html=pagePrivacy(); }
   else if(!p0){ html=pageHome(); }
