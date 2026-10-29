@@ -131,7 +131,7 @@ const FEATURED = ['c44','c39','c24','c31','c22','c1','c29','c34','c40'];
 const TOP3 = [
   {name:'벡스코', img:'c1_0', id:'c1'},
   {name:'국립과학관', img:'c25_0', id:'c25'},
-  {name:'송수초등학교', img:'c22_0', id:'c22'},
+  {name:'김해공항', img:'c34_0', id:'c34'},
 ];
 const AREAS = [...TABS.filter(t=>t.home).map(t=>[t.slug,t.name]), ['mixed','복합 시공 (2개 이상)'], ['etc','기타 / 일반 상담']];
 
