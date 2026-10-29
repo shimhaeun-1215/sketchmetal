@@ -12,8 +12,8 @@ const SITE = {
   formKey:'00e9d506-6811-4b75-8f93-e293630ec3dd',  // Web3Forms 액세스 키. 본문에 access_key 로 함께 보냅니다(주소 뒤에 붙이는 방식은 JSON 요청에서 500이 납니다)
   /* 견적문의 사진 첨부용 Cloudinary 설정. 두 칸이 모두 채워져야 첨부 칸이 화면에 나타납니다.
      Web3Forms 무료 요금제는 파일 첨부를 지원하지 않아서, 사진은 여기에 올리고 메일에는 주소만 넣습니다 */
-  photoCloud:'',          // Cloudinary 대시보드의 Cloud name
-  photoPreset:'',         // Cloudinary 에서 만든 Unsigned upload preset 이름
+  photoCloud:'w0mprcl1',          // Cloudinary 대시보드의 Cloud name
+  photoPreset:'w0mprcl1',         // Cloudinary 에서 만든 Unsigned upload preset 이름
 };
 SITE.kakao = 'https://map.kakao.com/link/search/' + encodeURIComponent(SITE.address);
 SITE.naver = 'https://map.naver.com/p/search/' + encodeURIComponent(SITE.address);
@@ -493,8 +493,8 @@ function pagePrivacy(){
       <p>회사는 홈페이지 견적문의 양식을 통해 아래 항목을 수집합니다.</p>
       <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
         <tr><th class="${th}">구분</th><th class="${th}">항목</th></tr>
-        <tr><td class="${td}">필수</td><td class="${td}">성함, 연락처, 문의 내용</td></tr>
-        <tr><td class="${td}">선택</td><td class="${td}">이메일, 회사·소속, 현장 위치${photoReady()?`, 현장 사진(최대 ${PHOTO.max}장)`:''}</td></tr>
+        <tr><td class="${td}">필수</td><td class="${td}">성함, 연락처, 현장 위치, 문의 내용</td></tr>
+        <tr><td class="${td}">선택</td><td class="${td}">이메일, 회사·소속${photoReady()?`, 현장 사진(최대 ${PHOTO.max}장)`:''}</td></tr>
         <tr><td class="${td}">자동 수집</td><td class="${td}">문의 전송 시 IP 주소 (스팸 차단 목적, 아래 4·5항 참고)</td></tr>
       </table></div>
       <p class="mt-4">회사 홈페이지는 쿠키를 비롯한 접속 기록 자동 수집 장치를 사용하지 않으며, 방문자 분석 도구도 두고 있지 않습니다.</p>
@@ -609,20 +609,19 @@ function pageContact(area){
             <div><label for="f-mail" class="${lab}">이메일</label><input id="f-mail" type="email" autocomplete="email" maxlength="60" class="${fld}" placeholder="example@email.com" aria-describedby="e-mail"><p id="e-mail" class="err mt-1 text-s1" role="alert"></p></div>
           </div>
           <div><label for="f-area" class="${lab}">문의 영역 <span class="text-gold-deep" aria-hidden="true">*</span></label><select id="f-area" required class="${fld}" aria-describedby="e-area"><option value="">선택해 주세요</option>${opts}</select><p id="e-area" class="err mt-1 text-s1" role="alert"></p></div>
-          <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" maxlength="50" class="${fld}" placeholder="예: 부산 해운대구"></div>
+          <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치 <span class="text-gold-deep" aria-hidden="true">*</span></label><input id="f-place" type="text" required maxlength="50" class="${fld}" placeholder="예: 부산 해운대구" aria-describedby="e-place"><p id="e-place" class="err mt-1 text-s1" role="alert"></p></div>
           <div><div class="flex items-baseline justify-between gap-3"><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><span id="msgCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${MSG_MAX}</span></div><textarea id="f-msg" rows="6" required maxlength="${MSG_MAX}" class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
           ${photoReady()?`<div>
-            <div class="flex items-baseline justify-between gap-3"><label for="f-photo" class="${lab}">현장 사진 <span class="font-normal text-ink2">(선택)</span></label><span id="photoCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${PHOTO.max}</span></div>
+            <div class="flex items-baseline justify-between gap-3"><label for="f-photo" class="${lab}">현장 사진</label><span id="photoCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${PHOTO.max}</span></div>
             <label for="f-photo" class="flex cursor-pointer items-center justify-center gap-2 border border-dashed border-[#C4CAD1] bg-white px-4 py-5 text-s1 text-ink2 transition-colors hover:border-navy hover:text-ink">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
               사진 선택 (최대 ${PHOTO.max}장)
             </label>
             <input id="f-photo" type="file" accept="image/*" multiple class="sr-only">
             <div id="photoList" class="mt-3 grid grid-cols-3 gap-3 empty:mt-0 sm:grid-cols-5"></div>
-            <p class="mt-2 text-s1 text-ink2">현장 상황을 보여 주시면 견적이 빨라집니다. 보내기 전에 자동으로 줄여서 올립니다.</p>
             <p id="e-photo" class="err mt-1 text-s1" role="alert"></p>
           </div>`:''}
-          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치${photoReady()?'·현장 사진':''}(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로${photoReady()?', 첨부하신 사진은 보관을 위해 Cloudinary(미국)로':''} 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="/privacy/" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
+          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·현장 위치·문의 내용(필수)과 이메일·회사${photoReady()?'·현장 사진':''}(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로${photoReady()?', 첨부하신 사진은 보관을 위해 Cloudinary(미국)로':''} 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="/privacy/" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
           <button id="qSubmit" type="submit" class="${BTN} w-full !py-3.5">견적 문의 보내기<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
           <p id="qNote" class="text-center text-s1 leading-relaxed text-ink2">※ 급한 문의는 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 직접 연락해 주세요.</p>
         </form>
@@ -696,15 +695,24 @@ function validate(fd){
   if(!fd.tel.trim()) e.tel='연락처를 입력해 주세요.'; else if(digits<9||digits>11) e.tel='연락처를 다시 확인해 주세요. 예: 010-0000-0000';
   if(fd.mail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.mail.trim())) e.mail='이메일 형식을 확인해 주세요.';
   if(!fd.area) e.area='문의 영역을 선택해 주세요.';
+  if(!fd.place.trim()) e.place='현장 위치를 입력해 주세요.';
   if(!fd.msg.trim()) e.msg='문의 내용을 입력해 주세요.'; else if(fd.msg.length>MSG_MAX) e.msg=`문의 내용은 ${MSG_MAX}자까지 입력할 수 있습니다.`;
   if(!fd.agree) e.agree='개인정보 수집·이용에 동의해 주세요.';
   return e;
+}
+/* 메일 본문은 HTML 이라 줄바꿈이 사라집니다. 주소를 한 칸에 몰아넣으면
+   5장이 한 줄에 다 붙어 버리므로 '사진 1', '사진 2' 처럼 항목을 나눠 보냅니다 */
+function photoFields(urls){
+  if(!urls || !urls.length) return {};
+  const o = {'첨부 사진': `${urls.length}장`};
+  urls.forEach((u,i)=>{ o[`사진 ${i+1}`] = u; });
+  return o;
 }
 async function sendQuote(fd){
   if(!SITE.formEndpoint){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; }
   try{
     const area=(AREAS.find(a=>a[0]===fd.area)||[])[1]||'';
-    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg,...(fd.photos&&fd.photos.length?{'첨부 사진':fd.photos.join('\n')}:{})})});
+    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg,...photoFields(fd.photos)})});
     return {ok:r.ok};
   }catch(err){ return {ok:false}; }
 }
@@ -714,7 +722,7 @@ function bindForm(){
   const read=()=>({name:$('#f-name').value,org:$('#f-org').value,tel:$('#f-tel').value,mail:$('#f-mail').value,area:$('#f-area').value,place:$('#f-place').value,msg:$('#f-msg').value,agree:$('#f-agree').checked,web:$('#f-web').value});
   const ids={...FIELD,agree:'f-agree'};
   const clear=k=>{ const p=$('#e-'+k); if(p) p.textContent=''; const i=$('#'+ids[k]); if(i) i.removeAttribute('aria-invalid'); };
-  ['name','tel','mail','area','msg','agree'].forEach(k=>{ const i=$('#'+ids[k]); i.addEventListener('input',()=>clear(k)); i.addEventListener('change',()=>clear(k)); });
+  ['name','tel','mail','area','place','msg','agree'].forEach(k=>{ const i=$('#'+ids[k]); i.addEventListener('input',()=>clear(k)); i.addEventListener('change',()=>clear(k)); });
   const tel=$('#f-tel');
   tel.addEventListener('input',()=>{
     const before=tel.value.slice(0,tel.selectionStart).replace(/\D/g,'').length;
@@ -757,7 +765,7 @@ function bindForm(){
   form.addEventListener('submit',async ev=>{
     ev.preventDefault();
     const fd=read(); const errs=validate(fd);
-    ['name','tel','mail','area','msg','agree'].forEach(clear);
+    ['name','tel','mail','area','place','msg','agree'].forEach(clear);
     const keys=Object.keys(errs);
     if(keys.length){
       keys.forEach(k=>{ $('#e-'+k).textContent=errs[k]; $('#'+ids[k]).setAttribute('aria-invalid','true'); });
