@@ -700,6 +700,9 @@ function validate(fd){
   if(!fd.agree) e.agree='개인정보 수집·이용에 동의해 주세요.';
   return e;
 }
+/* 메일 항목 이름은 받는 사람이 읽기 편하도록 한글로 보냅니다.
+   단, Web3Forms 는 'email' 항목을 답장 주소로 쓰기 때문에(문서: default replyto will be "email"),
+   한글로 바꾸면서 답장 기능이 사라지지 않도록 replyto 를 따로 지정합니다 */
 /* 메일 본문은 HTML 이라 줄바꿈이 사라집니다. 주소를 한 칸에 몰아넣으면
    5장이 한 줄에 다 붙어 버리므로 '사진 1', '사진 2' 처럼 항목을 나눠 보냅니다 */
 function photoFields(urls){
@@ -712,7 +715,7 @@ async function sendQuote(fd){
   if(!SITE.formEndpoint){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; }
   try{
     const area=(AREAS.find(a=>a[0]===fd.area)||[])[1]||'';
-    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg,...photoFields(fd.photos)})});
+    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,...(fd.mail.trim()?{replyto:fd.mail.trim()}:{}),'성함':fd.name,'회사 / 소속':fd.org,'연락처':fd.tel,'이메일':fd.mail,'문의 영역':area,'현장 위치':fd.place,'문의 내용':fd.msg,...photoFields(fd.photos)})});
     return {ok:r.ok};
   }catch(err){ return {ok:false}; }
 }
