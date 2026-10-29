@@ -10,6 +10,10 @@ const SITE = {
   lat:null, lng:null, // (선택) 마커 좌표를 직접 지정하려면 위도·경도를 넣으세요. 비워 두면 위 주소로 자동 검색합니다
   formEndpoint:'https://api.web3forms.com/submit',    // 견적 문의를 받을 폼 서비스 주소. 비어 있으면 화면 흐름만 보여 줍니다
   formKey:'00e9d506-6811-4b75-8f93-e293630ec3dd',  // Web3Forms 액세스 키. 본문에 access_key 로 함께 보냅니다(주소 뒤에 붙이는 방식은 JSON 요청에서 500이 납니다)
+  /* 견적문의 사진 첨부용 Cloudinary 설정. 두 칸이 모두 채워져야 첨부 칸이 화면에 나타납니다.
+     Web3Forms 무료 요금제는 파일 첨부를 지원하지 않아서, 사진은 여기에 올리고 메일에는 주소만 넣습니다 */
+  photoCloud:'',          // Cloudinary 대시보드의 Cloud name
+  photoPreset:'',         // Cloudinary 에서 만든 Unsigned upload preset 이름
 };
 SITE.kakao = 'https://map.kakao.com/link/search/' + encodeURIComponent(SITE.address);
 SITE.naver = 'https://map.naver.com/p/search/' + encodeURIComponent(SITE.address);
@@ -490,7 +494,7 @@ function pagePrivacy(){
       <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
         <tr><th class="${th}">구분</th><th class="${th}">항목</th></tr>
         <tr><td class="${td}">필수</td><td class="${td}">성함, 연락처, 문의 내용</td></tr>
-        <tr><td class="${td}">선택</td><td class="${td}">이메일, 회사·소속, 현장 위치</td></tr>
+        <tr><td class="${td}">선택</td><td class="${td}">이메일, 회사·소속, 현장 위치${photoReady()?`, 현장 사진(최대 ${PHOTO.max}장)`:''}</td></tr>
         <tr><td class="${td}">자동 수집</td><td class="${td}">문의 전송 시 IP 주소 (스팸 차단 목적, 아래 4·5항 참고)</td></tr>
       </table></div>
       <p class="mt-4">회사 홈페이지는 쿠키를 비롯한 접속 기록 자동 수집 장치를 사용하지 않으며, 방문자 분석 도구도 두고 있지 않습니다.</p>
@@ -507,6 +511,7 @@ function pagePrivacy(){
       <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[34rem]">
         <tr><th class="${th}">수탁자</th><th class="${th}">위탁 업무</th></tr>
         <tr><td class="${td}">Web3Forms</td><td class="${td}">견적문의 내용의 전송·보관 및 대표 이메일로의 전달</td></tr>
+        ${photoReady()?`<tr><td class="${td}">Cloudinary</td><td class="${td}">견적문의에 첨부하신 현장 사진의 보관</td></tr>`:''}
         <tr><td class="${td}">Vercel Inc.</td><td class="${td}">홈페이지 호스팅</td></tr>
       </table></div>
 
@@ -523,6 +528,17 @@ function pagePrivacy(){
         <tr><td class="${td}">재위탁</td><td class="${td}">스팸 차단을 위해 CleanTalk에 IP 주소와 이메일이 전달될 수 있습니다</td></tr>
         <tr><td class="${td}">거부 방법 및 효과</td><td class="${td}">견적문의 양식을 이용하지 않고 전화·이메일로 문의하시면 국외 이전이 발생하지 않습니다. 거부에 따른 불이익은 없습니다</td></tr>
       </table></div>
+      ${photoReady()?`<p class="mt-6">현장 사진을 첨부하시는 경우에는 사진이 아래와 같이 추가로 이전됩니다. <b>사진 첨부는 선택이며, 첨부하지 않으셔도 문의 접수에 아무런 제한이 없습니다.</b></p>
+      <div class="${box} mt-4 overflow-x-auto"><table class="w-full min-w-[40rem]">
+        <tr><th class="${th}">구분</th><th class="${th}">내용</th></tr>
+        <tr><td class="${td}">이전받는 자</td><td class="${td}">Cloudinary (연락처 privacy@cloudinary.com)</td></tr>
+        <tr><td class="${td}">이전 국가</td><td class="${td}">미국</td></tr>
+        <tr><td class="${td}">이전 일시 및 방법</td><td class="${td}">견적문의 전송 시점에 정보통신망을 통해 전송</td></tr>
+        <tr><td class="${td}">이전 항목</td><td class="${td}">첨부하신 현장 사진</td></tr>
+        <tr><td class="${td}">이전받는 자의 이용 목적</td><td class="${td}">사진의 보관 및 대표 이메일에서의 열람</td></tr>
+        <tr><td class="${td}">보유·이용 기간</td><td class="${td}">전송일로부터 최대 3년 또는 회사의 삭제 시까지</td></tr>
+        <tr><td class="${td}">거부 방법 및 효과</td><td class="${td}">사진을 첨부하지 않으시면 이전이 발생하지 않습니다. 거부에 따른 불이익은 없습니다</td></tr>
+      </table></div>`:''}
 
       ${h(6,'개인정보의 제3자 제공')}
       <p>회사는 정보주체의 개인정보를 제3자에게 제공하지 않습니다. 다만 법령에 따라 수사기관 등이 적법한 절차로 요구하는 경우에는 그에 따릅니다.</p>
@@ -595,7 +611,18 @@ function pageContact(area){
           <div><label for="f-area" class="${lab}">문의 영역 <span class="text-gold-deep" aria-hidden="true">*</span></label><select id="f-area" required class="${fld}" aria-describedby="e-area"><option value="">선택해 주세요</option>${opts}</select><p id="e-area" class="err mt-1 text-s1" role="alert"></p></div>
           <div><label for="f-place" class="${lab}">현장 / 프로젝트 위치</label><input id="f-place" type="text" maxlength="50" class="${fld}" placeholder="예: 부산 해운대구"></div>
           <div><div class="flex items-baseline justify-between gap-3"><label for="f-msg" class="${lab}">문의 내용 <span class="text-gold-deep" aria-hidden="true">*</span></label><span id="msgCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${MSG_MAX}</span></div><textarea id="f-msg" rows="6" required maxlength="${MSG_MAX}" class="${fld}" placeholder="프로젝트 개요, 규모, 희망 일정 등을 입력해 주세요." aria-describedby="e-msg"></textarea><p id="e-msg" class="err mt-1 text-s1" role="alert"></p></div>
-          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="/privacy/" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
+          ${photoReady()?`<div>
+            <div class="flex items-baseline justify-between gap-3"><label for="f-photo" class="${lab}">현장 사진 <span class="font-normal text-ink2">(선택)</span></label><span id="photoCount" class="text-s1 tabular-nums text-ink2" aria-hidden="true">0 / ${PHOTO.max}</span></div>
+            <label for="f-photo" class="flex cursor-pointer items-center justify-center gap-2 border border-dashed border-[#C4CAD1] bg-white px-4 py-5 text-s1 text-ink2 transition-colors hover:border-navy hover:text-ink">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+              사진 선택 (최대 ${PHOTO.max}장)
+            </label>
+            <input id="f-photo" type="file" accept="image/*" multiple class="sr-only">
+            <div id="photoList" class="mt-3 grid grid-cols-3 gap-3 empty:mt-0 sm:grid-cols-5"></div>
+            <p class="mt-2 text-s1 text-ink2">현장 상황을 보여 주시면 견적이 빨라집니다. 보내기 전에 자동으로 줄여서 올립니다.</p>
+            <p id="e-photo" class="err mt-1 text-s1" role="alert"></p>
+          </div>`:''}
+          <div><label class="flex items-start gap-3 text-s1 leading-relaxed"><input id="f-agree" type="checkbox" class="mt-1 h-5 w-5 shrink-0 accent-[#0A2A4A]" aria-describedby="e-agree"><span>개인정보 수집·이용 및 국외 이전에 동의합니다.<br><span class="text-ink2">수집 항목은 성함·연락처·문의 내용(필수)과 이메일·회사·현장 위치${photoReady()?'·현장 사진':''}(선택)이며, 문의 회신 목적으로만 쓰고 최대 3년 뒤 파기합니다. 문의 전달을 위해 국외 업체(Web3Forms, 인도)로${photoReady()?', 첨부하신 사진은 보관을 위해 Cloudinary(미국)로':''} 이전되며, 원하지 않으시면 전화나 이메일로 문의해 주세요. 자세한 내용은 <a href="/privacy/" class="underline underline-offset-4 hover:text-navy">개인정보처리방침</a>을 확인해 주세요.</span></span></label><p id="e-agree" class="err mt-1 text-s1" role="alert"></p></div>
           <button id="qSubmit" type="submit" class="${BTN} w-full !py-3.5">견적 문의 보내기<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
           <p id="qNote" class="text-center text-s1 leading-relaxed text-ink2">※ 급한 문의는 전화(${SITE.tel}) 또는 이메일(${SITE.email})로 직접 연락해 주세요.</p>
         </form>
@@ -603,6 +630,49 @@ function pageContact(area){
     </div>
   </section>`;
 }
+/* ── 견적문의 사진 첨부 ──
+   현장 사진은 휴대폰에서 5~10MB 씩 나옵니다. 그대로 올리면 데이터도 많이 쓰고 느려서,
+   보내기 전에 긴 변 1600px 으로 줄여서 올립니다(대개 300~600KB). 견적 보는 데는 충분합니다 */
+const PHOTO = { max:5, maxMB:20, edge:1600, quality:0.82 };
+const photoReady = () => !!(SITE.photoCloud && SITE.photoPreset);
+let photos = [];   /* {file, name, url(미리보기), blob(줄인 것)} */
+
+/* 사진 한 장을 캔버스로 줄입니다. 못 줄이면(HEIC 등) 원본을 그대로 씁니다 */
+function shrink(file){
+  return new Promise(resolve=>{
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => {
+      try{
+        const r = Math.min(1, PHOTO.edge/Math.max(img.width,img.height));
+        if(r===1 && file.size < 1.5*1024*1024){ URL.revokeObjectURL(url); return resolve(file); }
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(img.width*r); cv.height = Math.round(img.height*r);
+        cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+        cv.toBlob(b=>{ URL.revokeObjectURL(url); resolve(b && b.size<file.size ? b : file); },'image/jpeg',PHOTO.quality);
+      }catch(e){ URL.revokeObjectURL(url); resolve(file); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
+/* 사진을 보관소에 올리고 주소를 받아옵니다 */
+async function uploadPhotos(onStep){
+  if(!photoReady() || !photos.length) return [];
+  const out = [];
+  for(let i=0;i<photos.length;i++){
+    if(onStep) onStep(i+1, photos.length);
+    const body = new FormData();
+    body.append('file', photos[i].blob, photos[i].name);
+    body.append('upload_preset', SITE.photoPreset);
+    const r = await fetch(`https://api.cloudinary.com/v1_1/${SITE.photoCloud}/image/upload`,{method:'POST',body});
+    if(!r.ok) throw new Error('사진을 올리지 못했습니다');
+    const j = await r.json();
+    out.push(j.secure_url || j.url);
+  }
+  return out;
+}
+
 const MSG_MAX = 1000;   /* 문의 내용 최대 글자 수 */
 const FIELD = {name:'f-name',org:'f-org',tel:'f-tel',mail:'f-mail',area:'f-area',place:'f-place',msg:'f-msg'};
 /* 연락처는 숫자만 받아 국내 번호 형식(02 10자리, 그 밖 10~11자리)으로 다시 씁니다 */
@@ -634,7 +704,7 @@ async function sendQuote(fd){
   if(!SITE.formEndpoint){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; }
   try{
     const area=(AREAS.find(a=>a[0]===fd.area)||[])[1]||'';
-    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg})});
+    const r = await fetch(SITE.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({...(SITE.formKey?{access_key:SITE.formKey}:{}),subject:`[견적 문의] ${fd.name} / ${area}`,name:fd.name,org:fd.org,tel:fd.tel,email:fd.mail,area,place:fd.place,message:fd.msg,...(fd.photos&&fd.photos.length?{'첨부 사진':fd.photos.join('\n')}:{})})});
     return {ok:r.ok};
   }catch(err){ return {ok:false}; }
 }
@@ -654,6 +724,33 @@ function bindForm(){
     if(before===0) pos=0;
     tel.setSelectionRange(pos,pos);
   });
+  /* ── 사진 고르기 ── */
+  const pin=$('#f-photo');
+  if(pin){
+    const list=$('#photoList'), pcnt=$('#photoCount'), perr=$('#e-photo');
+    const draw=()=>{
+      list.innerHTML = photos.map((p,i)=>`<div class="relative"><span class="block aspect-square overflow-hidden border border-rule bg-plate"><img src="${p.url}" alt="" class="h-full w-full object-cover"></span><button type="button" data-rm="${i}" class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-ink bg-paper text-s0 font-bold leading-none hover:bg-ink hover:text-paper" aria-label="${i+1}번째 사진 빼기">✕</button></div>`).join('');
+      pcnt.textContent=`${photos.length} / ${PHOTO.max}`;
+    };
+    pin.addEventListener('change', async ()=>{
+      perr.textContent='';
+      const picked=[...pin.files]; pin.value='';
+      for(const f of picked){
+        if(photos.length>=PHOTO.max){ perr.textContent=`사진은 ${PHOTO.max}장까지 올릴 수 있습니다.`; break; }
+        if(!f.type.startsWith('image/')){ perr.textContent='사진 파일만 올릴 수 있습니다.'; continue; }
+        if(f.size > PHOTO.maxMB*1024*1024){ perr.textContent=`한 장이 ${PHOTO.maxMB}MB 를 넘습니다: ${f.name}`; continue; }
+        const blob=await shrink(f);
+        photos.push({name:f.name, blob, url:URL.createObjectURL(blob)});
+        draw();
+      }
+      draw();
+    });
+    list.addEventListener('click',e=>{
+      const b=e.target.closest('[data-rm]'); if(!b) return;
+      const i=+b.dataset.rm; URL.revokeObjectURL(photos[i].url); photos.splice(i,1); perr.textContent=''; draw();
+    });
+    photos=[]; draw();
+  }
   const msg=$('#f-msg'), cnt=$('#msgCount');
   const tick=()=>{ cnt.textContent=`${msg.value.length} / ${MSG_MAX}`; };
   msg.addEventListener('input',tick); tick();
@@ -667,9 +764,20 @@ function bindForm(){
       $('#'+ids[keys[0]]).focus(); return;
     }
     if(fd.web){ showQuoteDone(box,fd,true); return; }
-    const btn=$('#qSubmit'); btn.disabled=true; btn.textContent='보내는 중…'; btn.classList.add('opacity-60');
+    const btn=$('#qSubmit'); btn.disabled=true; btn.classList.add('opacity-60');
+    btn.textContent='보내는 중…';
+    if(photos.length){
+      try{
+        fd.photos = await uploadPhotos((i,n)=>{ btn.textContent=`사진 올리는 중… ${i}/${n}`; });
+      }catch(err){
+        btn.disabled=false; btn.classList.remove('opacity-60'); btn.textContent='견적 문의 보내기';
+        const pe=$('#e-photo'); if(pe) pe.textContent='사진을 올리지 못했습니다. 사진을 빼고 보내시거나 잠시 후 다시 시도해 주세요.';
+        return;
+      }
+      btn.textContent='보내는 중…';
+    }
     const res=await sendQuote(fd);
-    if(res.ok) showQuoteDone(box,fd,res.demo);
+    if(res.ok){ photos.forEach(p=>URL.revokeObjectURL(p.url)); photos=[]; showQuoteDone(box,fd,res.demo); }
     else showQuoteFail(box,()=>{ route(); Object.entries(FIELD).forEach(([k,id])=>{ const el=$('#'+id); if(el&&fd[k]!=null) el.value=fd[k]; }); });
   });
 }
