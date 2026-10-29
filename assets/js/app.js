@@ -708,7 +708,8 @@ function pageNotFound(){
 }
 
 /* ============ 라우터 ============ */
-const TITLES = {home:'스케치금속건설 | 미대출신의 감각 금속기술의 완성', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침', nf:'페이지를 찾을 수 없습니다'};
+/* 홈 제목은 상호만 둡니다. 검색 결과에서 슬로건이 붙으면 홈페이지가 아니라 광고처럼 보여서 뺐습니다(2026-10-29) */
+const TITLES = {home:'(주)스케치금속건설', about:'인사말', why:'WHY SKETCH METAL', loc:'오시는 길', works:'시공사례', case:'시공사례', contact:'견적문의', privacy:'개인정보처리방침', nf:'페이지를 찾을 수 없습니다'};
 let lastKey='', lastPath='';
 const scrollMemo={};
 /* 주소는 /about/ /works/structures/ /case/c39/ 처럼 진짜 경로를 씁니다.
